@@ -7,32 +7,38 @@ using System.Threading.Tasks;
 
 namespace DoAnTinHoc
 {
-    internal class Product // hang hoa
+    // hang hoa
+    internal class Product 
     {
         #region Properties
         public int IdProduct { get; set; }
         public string Name { get; set; }
-        public int Amount { get; set; } // so luong
+        // so luong
+        public int Amount { get; set; } 
         public float Price { get; set; }
-        public Product NextProduct { get; set; } // san pham tiep theo
+        // san pham tiep theo
+        public Product NextProduct { get; set; } 
         #endregion
 
         #region Constructor
         public Product()
         {
-            NextProduct = this;
+            NextProduct = null;
         }
         #endregion
     }
 
-    internal class Category // loai hang hoa
+    // loai hang hoa
+    internal class Category 
     {
 
         #region Properties
         public int IdCategory { get; set; }
         public string Name { get; set; }
-        public Category NextCategory { get; set; } // ma hang tiep theo
-        public Product HeadOfProduct { get; set; } // con tro san pham dau
+        // ma hang tiep theo
+        public Category NextCategory { get; set; }
+        // con tro san pham dau
+        public Product HeadOfProduct { get; set; } 
         #endregion
 
         #region Constructor
@@ -58,40 +64,57 @@ namespace DoAnTinHoc
         #endregion
 
         #region Function
-        internal static void insertCategory(ref Category headOfCategory ,Category newCategory) // Thêm một mặt hàng mới vào danh sách
+        // Thêm một mặt hàng mới vào danh sách
+        internal static void insertCategory(ref Category headOfCategory ,Category newCategory) 
         {
-            Category cloneOfHeadCategory = headOfCategory; // do thằng headOfCategory dùng nó làm con trỏ cho nguyên danh sách nên cần phải clone thằng khác để không thay đổi danh sách
-            while (cloneOfHeadCategory.NextCategory != null) // khi mà thằng kế tiếp nó vẫn còn
+            // do thằng headOfCategory dùng nó làm con trỏ cho nguyên danh sách nên cần phải clone thằng khác để không thay đổi danh sách
+            Category cloneOfHeadCategory = headOfCategory;
+            // khi mà thằng kế tiếp nó vẫn còn
+            while (cloneOfHeadCategory.NextCategory != null) 
             {
-                cloneOfHeadCategory = cloneOfHeadCategory.NextCategory; // thì dịch con trỏ clone này sang thằng kế tiếp
+                // thì dịch con trỏ clone này sang thằng kế tiếp
+                cloneOfHeadCategory = cloneOfHeadCategory.NextCategory; 
             }
-            cloneOfHeadCategory.NextCategory = newCategory; // khi mà thằng kế bên nó đã trống thì thêm mặt hàng mới vào (nextCategory là kiểu Category)
+            // khi mà thằng kế bên nó đã trống thì thêm mặt hàng mới vào (nextCategory là kiểu Category)
+            cloneOfHeadCategory.NextCategory = newCategory; 
         }
 
         internal static void initCategoryList(ref Category headOfCategory)
         {
-            string[] categoryList = File.ReadAllLines(@"C:\NhatTruong\Project\DoAnTinHoc\Data.txt"); // lấy dữ liệu các mặt hàng có sẵn trong danh sách
-            string[] headOfCategoryContent = categoryList.First().Split(','); // sure là thằng đầu tiên sẽ là con trỏ rồi nên lấy nó ra khỏi cái list mặt hàng
-            categoryList = categoryList.Skip(1).ToArray(); // bỏ đi thằng head lúc nãy, danh sách giờ chỉ còn những thằng tiếp theo của nó thôi
-            if (headOfCategoryContent.Length == 0) // nếu thằng đầu tiên rỗng thì chưa có danh sách
+            // lấy dữ liệu các mặt hàng có sẵn trong danh sách
+            string[] categoryList = File.ReadAllLines(@"C:\NhatTruong\Project\DoAnTinHoc\Data.txt");
+            // sure là thằng đầu tiên sẽ là con trỏ rồi nên lấy nó ra khỏi cái list mặt hàng
+            string[] headOfCategoryContent = categoryList.First().Split(',');
+            // bỏ đi thằng head lúc nãy, danh sách giờ chỉ còn những thằng tiếp theo của nó thôi
+            categoryList = categoryList.Skip(1).ToArray();
+            // nếu thằng đầu tiên rỗng thì chưa có danh sách
+            if (headOfCategoryContent.Length == 0) 
             {
-                Console.WriteLine("File empty"); // làm luôn trường hợp khởi tạo rỗng nha
+                // làm luôn trường hợp khởi tạo rỗng nha
+                Console.WriteLine("File empty"); 
             }
             else
             {
-                headOfCategory = new Category { IdCategory = Int32.Parse(headOfCategoryContent[0]), Name = headOfCategoryContent[1].ToString() }; // khởi tạo head
-                if (categoryList.Length != 0) // nếu những thằng phía sau nó có tồn tại
+                // khởi tạo head
+                headOfCategory = new Category { IdCategory = Int32.Parse(headOfCategoryContent[0]), Name = headOfCategoryContent[1].ToString() };
+                // nếu những thằng phía sau nó có tồn tại
+                if (categoryList.Length != 0) 
                 {
-                    foreach (var item in categoryList) // duyệt danh sách, mỗi dòng trong file txt sẽ tương đương với một item
+                    // duyệt danh sách, mỗi dòng trong file txt sẽ tương đương với một item
+                    foreach (var item in categoryList) 
                     {
-                        string[] tempCategoryContent = item.Split(','); // tách chuỗi, để lấy thông tin
-                        Category temp = new Category(Int32.Parse(tempCategoryContent[0]), tempCategoryContent[1].ToString()); // Khởi tạo thằng category mà head liên kết tới
-                        insertCategory(ref headOfCategory, temp); // thêm nó vào danh sách đã có
+                        // tách chuỗi, để lấy thông tin
+                        string[] tempCategoryContent = item.Split(',');
+                        // Khởi tạo thằng category mà head liên kết tới
+                        Category temp = new Category(Int32.Parse(tempCategoryContent[0]), tempCategoryContent[1].ToString()); 
+                        // thêm nó vào danh sách đã có
+                        insertCategory(ref headOfCategory, temp); 
                     }
                 }
             }
-
         }
+
+
     }
     #endregion
 
