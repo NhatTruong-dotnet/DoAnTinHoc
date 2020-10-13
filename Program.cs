@@ -45,17 +45,20 @@ namespace DoAnTinHoc
         }
         internal static void initCategoryList(ref Category headOfCategory)
         {
-            string text = File.ReadAllText(@"C:\NhatTruong\Project\DoAnTinHoc\Data.txt");
-            if (String.IsNullOrEmpty(text))
+            string[] headOfCategoryContent = File.ReadLines(@"C:\NhatTruong\Project\DoAnTinHoc\Data.txt").First().Split(',');
+            if (headOfCategoryContent.Length == 0)
             {
                 Console.WriteLine("File empty");
             }
             else
             {
-                string[] textArr = text.Split('\n');
-                string[] headOfCategoryContent = textArr[0].Split(',');
-                Console.WriteLine(typeof (headOfCategory));
-                headOfCategory = new Category();
+                headOfCategory = new Category
+                {
+                    IdCategory = Int32.Parse(headOfCategoryContent[0]),
+                    Name = headOfCategoryContent[1],
+                    
+                };
+            }
                 
             }
         }
