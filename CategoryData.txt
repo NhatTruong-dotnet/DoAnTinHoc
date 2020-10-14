@@ -1,6 +1,2 @@
 ﻿1, Phone, 2
 2, Bike, 3
-3, Rocket, 4
-4, maithuy, 5
-5, tradao, 6
-6, trasua, 1

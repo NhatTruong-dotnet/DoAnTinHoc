@@ -117,21 +117,21 @@ namespace DoAnTinHoc
         #region Constructor
         public Category() // hàm khởi tạo constructor mặc định thì nó sẽ là một cục riêng biệt không tham chiếu đến cục khác cũng chưa có danh sách sản phẩm của nó
         {
-            NextCategory = null;
+            NextCategory = this;
             HeadOfProduct = null;
         }
 
         public Category(int idCategory) // tương tự ở trên nhưng với id cho trước 
         {
             this.IdCategory = idCategory;
-            this.NextCategory = null;
+            this.NextCategory = this;
             this.HeadOfProduct = null;
         }
         public Category(int idCategory, string name) // tương tự ở trên nhưng với id và name được, này được tận dụng trong hàm insert
         {
             this.IdCategory = idCategory;
             this.Name = name;
-            this.NextCategory = null;
+            this.NextCategory = this;
             this.HeadOfProduct = null;
         }
         #endregion
@@ -142,20 +142,19 @@ namespace DoAnTinHoc
         {
             // do thằng headOfCategory dùng nó làm con trỏ cho nguyên danh sách nên cần phải clone thằng khác để không thay đổi danh sách
             Category cloneOfHeadCategory = headOfCategory;
-            // khi mà thằng kế tiếp nó vẫn còn
-            while (cloneOfHeadCategory.NextCategory != null) 
+            while (cloneOfHeadCategory.NextCategory != headOfCategory)
             {
                 // thì dịch con trỏ clone này sang thằng kế tiếp
-                cloneOfHeadCategory = cloneOfHeadCategory.NextCategory; 
+                cloneOfHeadCategory = cloneOfHeadCategory.NextCategory;
             }
-            // khi mà thằng kế bên nó đã trống thì thêm mặt hàng mới vào (nextCategory là kiểu Category)
-            cloneOfHeadCategory.NextCategory = newCategory; 
+            cloneOfHeadCategory.NextCategory = newCategory;
+            cloneOfHeadCategory.NextCategory.NextCategory = headOfCategory;
         }
 
         public void initCategoryList(ref Category headOfCategory)
         {
             // lấy dữ liệu các mặt hàng có sẵn trong danh sách
-            string[] categoryList = File.ReadAllLines(@"C:\NhatTruong\Project\DoAnTinHoc\Data.txt");
+            string[] categoryList = File.ReadAllLines(@"C:\NhatTruong\Project\DoAnTinHoc\CategoryData.txt");
             // sure là thằng đầu tiên sẽ là con trỏ rồi nên lấy nó ra khỏi cái list mặt hàng
             string[] headOfCategoryContent = categoryList.First().Split(',');
             // bỏ đi thằng head lúc nãy, danh sách giờ chỉ còn những thằng tiếp theo của nó thôi
@@ -197,7 +196,8 @@ namespace DoAnTinHoc
         {
             //init CategoryList
             Category headOfCategoryList = new Category() ;
-            
+            headOfCategoryList.initCategoryList(ref headOfCategoryList);
+            Console.WriteLine(headOfCategoryList.NextCategory.NextCategory.Name);
             Console.ReadLine();
         }
     }
