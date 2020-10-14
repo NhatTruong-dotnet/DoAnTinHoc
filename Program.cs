@@ -1,23 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DoAnTinHoc
 {
     // hang hoa
-    public class Product:IProduct
+    public class Product : IProduct
     {
         #region Properties
         public int IdProduct { get; set; }
         public string Name { get; set; }
         // so luong
-        public int Amount { get; set; } 
+        public int Amount { get; set; }
         public float Price { get; set; }
         // san pham tiep theo
-        public Product NextProduct { get; set; } 
+        public Product NextProduct { get; set; }
         #endregion
 
         #region Constructor
@@ -48,6 +50,7 @@ namespace DoAnTinHoc
             }
             // khi mà thằng kế bên nó đã trống thì thêm mặt hàng mới vào (nextCategory là kiểu Category)
             cloneOfHeadProduct.NextProduct = newProduct;
+
         }
 
         public void initProductList(ref Product headOfProduct)
@@ -67,12 +70,12 @@ namespace DoAnTinHoc
             else
             {
                 // khởi tạo head
-                headOfProduct = new Product 
+                headOfProduct = new Product
                 {
-                    IdProduct = Int32.Parse(headOfProductContent[0]), 
-                    Name = headOfProductContent[1].ToString(), 
-                    Amount = Int32.Parse(headOfProductContent[2]), 
-                    Price = float.Parse(headOfProductContent[3]) 
+                    IdProduct = Int32.Parse(headOfProductContent[0]),
+                    Name = headOfProductContent[1].ToString(),
+                    Amount = Int32.Parse(headOfProductContent[2]),
+                    Price = float.Parse(headOfProductContent[3])
                 };
 
                 // nếu những thằng phía sau nó có tồn tại
@@ -86,7 +89,7 @@ namespace DoAnTinHoc
                         // Khởi tạo thằng category mà head liên kết tới
                         Product temp = new Product
                             (
-                                Int32.Parse(tempCategoryContent[0]), 
+                                Int32.Parse(tempCategoryContent[0]),
                                 tempCategoryContent[1].ToString(),
                                 Int32.Parse(tempCategoryContent[2]),
                                 float.Parse(tempCategoryContent[3])
@@ -98,11 +101,11 @@ namespace DoAnTinHoc
                 }
             }
         }
-        #endregion
+        #endregion 
     }
 
     // loai hang hoa
-    public class Category:ICategory
+    public class Category : ICategory
     {
 
         #region Properties
@@ -111,7 +114,7 @@ namespace DoAnTinHoc
         // ma hang tiep theo
         public Category NextCategory { get; set; }
         // con tro san pham dau
-        public Product HeadOfProduct { get; set; } 
+        public Product HeadOfProduct { get; set; }
         #endregion
 
         #region Constructor
@@ -138,7 +141,7 @@ namespace DoAnTinHoc
 
         #region Function
         // Thêm một mặt hàng mới vào danh sách
-        public void insertCategory(ref Category headOfCategory ,Category newCategory) 
+        public void insertCategory(ref Category headOfCategory, Category newCategory)
         {
             // do thằng headOfCategory dùng nó làm con trỏ cho nguyên danh sách nên cần phải clone thằng khác để không thay đổi danh sách
             Category cloneOfHeadCategory = headOfCategory;
@@ -151,53 +154,90 @@ namespace DoAnTinHoc
             cloneOfHeadCategory.NextCategory.NextCategory = headOfCategory;
         }
 
+        public bool validateCategory(string newCategoryName)
+        {
+            bool result = false;
+            string[] categoryList = File.ReadLines(@"C:\Users\Dell\Desktop\ConsoleApp2\Data.txt").First().Split(',');
+            foreach (var item in categoryList)
+            {
+                if (newCategoryName != item)
+                {
+                    result = true;
+                }
+            }
+            return result;
+        }
+
         public void initCategoryList(ref Category headOfCategory)
         {
             // lấy dữ liệu các mặt hàng có sẵn trong danh sách
-            string[] categoryList = File.ReadAllLines(@"C:\NhatTruong\Project\DoAnTinHoc\CategoryData.txt");
+            string[] categoryList = File.ReadAllLines(@"C:\Users\Dell\Desktop\ConsoleApp2\Data.txt");
             // sure là thằng đầu tiên sẽ là con trỏ rồi nên lấy nó ra khỏi cái list mặt hàng
-            string[] headOfCategoryContent = categoryList.First().Split(',');
+            string[] headOfCategoryContent = categoryList[1].Split(',');
             // bỏ đi thằng head lúc nãy, danh sách giờ chỉ còn những thằng tiếp theo của nó thôi
-            categoryList = categoryList.Skip(1).ToArray();
+            categoryList = categoryList.Skip(2).ToArray();
             // nếu thằng đầu tiên rỗng thì chưa có danh sách
-            if (headOfCategoryContent.Length == 0) 
+            if (headOfCategoryContent.Length == 0)
             {
                 // làm luôn trường hợp khởi tạo rỗng nha
-                Console.WriteLine("File empty"); 
+                Console.WriteLine("File empty");
             }
             else
             {
                 // khởi tạo head
                 headOfCategory = new Category { IdCategory = Int32.Parse(headOfCategoryContent[0]), Name = headOfCategoryContent[1].ToString() };
                 // nếu những thằng phía sau nó có tồn tại
-                if (categoryList.Length != 0) 
+                if (categoryList.Length != 0)
                 {
                     // duyệt danh sách, mỗi dòng trong file txt sẽ tương đương với một item
-                    foreach (var item in categoryList) 
+                    foreach (var item in categoryList)
                     {
                         // tách chuỗi, để lấy thông tin
                         string[] tempCategoryContent = item.Split(',');
                         // Khởi tạo thằng category mà head liên kết tới
-                        Category temp = new Category(Int32.Parse(tempCategoryContent[0]), tempCategoryContent[1].ToString()); 
+                        Category temp = new Category(Int32.Parse(tempCategoryContent[0]), tempCategoryContent[1].ToString());
                         // thêm nó vào danh sách đã có
-                        insertCategory(ref headOfCategory, temp); 
+                        insertCategory(ref headOfCategory, temp);
                     }
                 }
             }
         }
 
+        public Category getNewCategory()
+        {
+            string[] lastCategory = File.ReadAllLines(@"C:\Users\Dell\Desktop\ConsoleApp2\Data.txt").Last().Split(',');
+            Console.Write("Enter your category: ");
+            string nameCategory = Console.ReadLine();
+            int idCategory = Int32.Parse(lastCategory[0]);
+            Category returnCategory = new Category(idCategory, nameCategory);
+            return returnCategory;
+        }
 
+        public void addNewCategory(ref Category headOfCategory)
+        {
+            Category newCategory = new Category();
+            newCategory = newCategory.getNewCategory();
+            if (!newCategory.validateCategory(newCategory.Name))
+            {
+                headOfCategory.insertCategory(ref headOfCategory,newCategory);
+            }
+            else
+            {
+                Console.WriteLine("This category had been inserted");
+            }
+        }
+
+        #endregion
     }
-    #endregion
-
     internal class Mainclass
     {
         public static void Main()
         {
             //init CategoryList
-            Category headOfCategoryList = new Category() ;
+            Category headOfCategoryList = new Category();
             headOfCategoryList.initCategoryList(ref headOfCategoryList);
             Console.WriteLine(headOfCategoryList.NextCategory.NextCategory.Name);
+            headOfCategoryList.addNewCategory(ref headOfCategoryList);
             Console.ReadLine();
         }
     }

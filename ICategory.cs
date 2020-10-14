@@ -10,5 +10,7 @@ namespace DoAnTinHoc
     {
         void insertCategory(ref Category headOfCategory, Category newCategory);
         void initCategoryList(ref Category headOfCategory);
+        bool validateCategory(string newCategoryName);
+        Category getNewCategory();
     }
 }
