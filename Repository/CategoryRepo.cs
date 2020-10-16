@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 
 namespace DoAnTinHoc
 {
-    public class CategoryRepo:ICategory
+    public class CategoryRepo : ICategory
     {
         #region Function
         // Thêm một mặt hàng mới vào danh sách
+
+
         public void insertCategory(ref Category headOfCategory, Category newCategory)
         {
             // do thằng headOfCategory dùng nó làm con trỏ cho nguyên danh sách nên cần phải clone thằng khác để không thay đổi danh sách
@@ -24,11 +26,47 @@ namespace DoAnTinHoc
             cloneOfHeadCategory.NextCategory = newCategory;
             cloneOfHeadCategory.NextCategory.NextCategory = headOfCategory;
         }
+        public void DeleteCategory(ref Category headOfCategory, Category deleteCategory)
+        {
+            if (headOfCategory == null)
+                Console.WriteLine("This Empty");
+
+            Category cloneOfCategory = headOfCategory;
+            Category pointerInLoop = new Category();
+            cloneOfCategory.NextCategory = deleteCategory;
+
+            // Kiểm tra xem nút có phải là nút duy nhất không
+            if (cloneOfCategory.NextCategory == headOfCategory)
+                headOfCategory = null;
+            else
+            {
+                pointerInLoop = cloneOfCategory;
+                cloneOfCategory = cloneOfCategory.NextCategory;
+                if (cloneOfCategory.Name == deleteCategory.Name)
+                {
+                    cloneOfCategory = deleteCategory;
+                    headOfCategory = pointerInLoop;
+                }
+            }
+            while (cloneOfCategory.NextCategory != headOfCategory)
+            {
+                if (cloneOfCategory.Name == deleteCategory.Name)
+                {
+                    pointerInLoop.NextCategory = cloneOfCategory.NextCategory;
+                    Console.WriteLine("Deleted");
+                    break;
+                }
+                cloneOfCategory = cloneOfCategory.NextCategory;
+                pointerInLoop = pointerInLoop.NextCategory;
+            }
+           
+    }
+
 
         public bool validateCategory(string newCategoryName)
         {
             bool result = false;
-            string[] categoryList = File.ReadLines(@"C:\NhatTruong\Project\DoAnTinHoc\Data\CategoryData.txt").First().Split(',');
+            string[] categoryList = File.ReadLines(@"C:\Users\Dell\Desktop\ConsoleApp1\CategoryData.txt").First().Split(',');
             foreach (var item in categoryList)
             {
                 if (newCategoryName == item)
@@ -42,7 +80,7 @@ namespace DoAnTinHoc
         public void initCategoryList(ref Category headOfCategory)
         {
             // lấy dữ liệu các mặt hàng có sẵn trong danh sách
-            string[] categoryList = File.ReadAllLines(@"C:\NhatTruong\Project\DoAnTinHoc\Data\CategoryData.txt");
+            string[] categoryList = File.ReadAllLines(@"C:\Users\Dell\Desktop\ConsoleApp1\CategoryData.txt");
             // sure là thằng đầu tiên sẽ là con trỏ rồi nên lấy nó ra khỏi cái list mặt hàng
             string[] headOfCategoryContent = categoryList[1].Split(',');
             // bỏ đi thằng head lúc nãy, danh sách giờ chỉ còn những thằng tiếp theo của nó thôi
@@ -77,19 +115,16 @@ namespace DoAnTinHoc
         public Category getNewCategory()
         {
             // đọc file dữ liệu
-            string[] lastCategory = File.ReadAllLines(@"C:\NhatTruong\Project\DoAnTinHoc\Data\CategoryData.txt").Last().Split(',');
+            string[] lastCategory = File.ReadAllLines(@"C:\Users\Dell\Desktop\ConsoleApp1\CategoryData.txt").Last().Split(',');
             Console.Write("Enter your category: ");
-            string nameCategory = Console.ReadLine().ToLower();
+            string nameCategory = Console.ReadLine();
             int idCategory = Int32.Parse(lastCategory[0]);
             Category returnCategory = new Category(idCategory, nameCategory);
             return returnCategory;
         }
 
-        public void updateCategory(ref Category headOfCategory, Category updateCategory)
-        {
-            throw new NotImplementedException();
-        }
-
+  
+    }
         #endregion
     }
-}
+
