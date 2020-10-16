@@ -8,25 +8,44 @@ namespace DoAnTinHoc
 {
     public class CategoryService
     {
-        public void addNewCategory(ref Category headOfCategory)
+        public void LoadCategoryList(ref Category headOfCategory)
         {
             //dự phòng biến trả về 
-            Category newCategory = new Category();
             //init Repo của Category
             CategoryRepo categoryRepo = new CategoryRepo(); 
-            //Gọi hàm lấy một category mới
-            newCategory = categoryRepo.getNewCategory();
-            //check xem category đã tồn tại rồi hay chưa
-            if (!categoryRepo.validateCategory(newCategory.Name))
+            categoryRepo.loadCategoryList(ref headOfCategory);
+        }
+
+        public void AddNewCategory(ref Category headOfCategory)
+        {
+            CategoryRepo categoryRepo = new CategoryRepo();
+            Category newCategory = categoryRepo.getNewCategory();
+            if (categoryRepo.validateCategory(newCategory.Name))
             {
-                categoryRepo.insertCategory(ref headOfCategory, newCategory);
-                Console.WriteLine("Insert success");
+                Console.WriteLine("Item already inserted");
             }
             else
             {
-                Console.WriteLine("This category had been inserted");
+                categoryRepo.insertCategory(ref headOfCategory, newCategory);
+                categoryRepo.updateFile(ref headOfCategory);
+                Console.WriteLine("Insert success");
             }
         }
 
+        public void DeleteCategory(ref Category headOfCategory)
+        {
+            CategoryRepo categoryRepo = new CategoryRepo();
+            Category deleteCategory = categoryRepo.getNewCategory();
+            if (!categoryRepo.validateCategory(deleteCategory.Name))
+            {
+                Console.WriteLine("This category not in list");
+            }
+            else
+            {
+                categoryRepo.deleteCategory(ref headOfCategory,deleteCategory);
+                categoryRepo.updateFile(ref headOfCategory);
+            }
+           
+        }
     }
 }
