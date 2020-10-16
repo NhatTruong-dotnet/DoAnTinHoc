@@ -25,7 +25,7 @@ namespace DoAnTinHoc
 
         }
 
-        public void initProductList(ref Product headOfProduct)
+        public void loadProductList(ref Product headOfProduct)
         {
             // lấy dữ liệu các mặt hàng có sẵn trong danh sách
             string[] productList = File.ReadAllLines(@"C:\NhatTruong\Project\DoAnTinHoc\Data.txt");

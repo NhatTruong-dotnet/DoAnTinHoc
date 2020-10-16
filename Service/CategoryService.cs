@@ -36,16 +36,49 @@ namespace DoAnTinHoc
         {
             CategoryRepo categoryRepo = new CategoryRepo();
             Category deleteCategory = categoryRepo.getNewCategory();
+
             if (!categoryRepo.validateCategory(deleteCategory.Name))
             {
-                Console.WriteLine("This category not in list");
+                categoryRepo.deleteCategory(ref headOfCategory, deleteCategory);
+                categoryRepo.updateFile(ref headOfCategory);
             }
             else
             {
-                categoryRepo.deleteCategory(ref headOfCategory,deleteCategory);
-                categoryRepo.updateFile(ref headOfCategory);
+                 Console.WriteLine("This category not in list");
             }
            
         }
+
+        public void UpdateCategory(ref Category headOfCategory)
+        {
+            CategoryRepo categoryRepo = new CategoryRepo();
+            Console.WriteLine("The category want to update");
+            Category needUpdateCategory = categoryRepo.getNewCategory();
+            Console.WriteLine("Update content");
+            Category updatedCategory = categoryRepo.getNewCategory();
+            if (categoryRepo.validateCategory(needUpdateCategory.Name))
+            {
+                categoryRepo.updateCategory(ref headOfCategory, updatedCategory, needUpdateCategory);
+                categoryRepo.updateFile(ref headOfCategory);
+            }
+            else
+            {
+                Console.WriteLine("This category not in list");
+            }
+        }
+
+        public void ShowCategoryList(Category headOfCategory)
+        {
+            int theFirstID = headOfCategory.IdCategory;
+            Console.Write("The List of Category: ");
+            Console.Write(headOfCategory.Name);
+            headOfCategory = headOfCategory.NextCategory;
+            while (headOfCategory.IdCategory != theFirstID)
+            {
+                Console.Write(", "+ headOfCategory.Name);
+                headOfCategory = headOfCategory.NextCategory;
+            }
+        }
+
     }
 }

@@ -12,6 +12,7 @@ namespace DoAnTinHoc
         void insertCategory(ref Category headOfCategory, Category newCategory);
         void loadCategoryList(ref Category headOfCategory);
         void deleteCategory(ref Category headOfCategory, Category deleteCategory);
+        void updateCategory(ref Category headOfCategory, Category updateCategory, Category needUpdateCategory);
         #endregion
 
         #region File

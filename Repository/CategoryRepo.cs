@@ -100,6 +100,24 @@ namespace DoAnTinHoc
             }
   
         }
+
+        public void updateCategory(ref Category headOfCategory, Category updateCategory, Category needUpdatedCategory)
+        {
+            Category cloneOfHeadCategory = headOfCategory;
+            while (cloneOfHeadCategory.NextCategory != headOfCategory)
+            {
+                if (cloneOfHeadCategory.Name != needUpdatedCategory.Name.Trim())
+                {
+                    cloneOfHeadCategory = cloneOfHeadCategory.NextCategory;
+                }
+                else
+                {
+                    cloneOfHeadCategory.Name = updateCategory.Name.Trim();
+                    break;
+                }
+            }
+            
+        }
         #endregion
         public bool validateCategory(string newCategoryName)
         {
@@ -120,7 +138,7 @@ namespace DoAnTinHoc
             // đọc file dữ liệu
             string[] lastCategory = File.ReadAllLines(filePath).Last().Split(',');
             Console.Write("Enter your category: ");
-            string nameCategory = Console.ReadLine();
+            string nameCategory = Console.ReadLine().ToLower();
             int idCategory = Int32.Parse(lastCategory[0]);
             Category returnCategory = new Category(idCategory+1, nameCategory);
             return returnCategory;
