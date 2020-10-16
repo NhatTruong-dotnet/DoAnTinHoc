@@ -31,7 +31,7 @@ namespace DoAnTinHoc
             string[] categoryList = File.ReadLines(@"C:\NhatTruong\Project\DoAnTinHoc\Data\CategoryData.txt").First().Split(',');
             foreach (var item in categoryList)
             {
-                if (newCategoryName != item)
+                if (newCategoryName == item)
                 {
                     result = true;
                 }
@@ -79,10 +79,15 @@ namespace DoAnTinHoc
             // đọc file dữ liệu
             string[] lastCategory = File.ReadAllLines(@"C:\NhatTruong\Project\DoAnTinHoc\Data\CategoryData.txt").Last().Split(',');
             Console.Write("Enter your category: ");
-            string nameCategory = Console.ReadLine();
+            string nameCategory = Console.ReadLine().ToLower();
             int idCategory = Int32.Parse(lastCategory[0]);
             Category returnCategory = new Category(idCategory, nameCategory);
             return returnCategory;
+        }
+
+        public void updateCategory(ref Category headOfCategory, Category updateCategory)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

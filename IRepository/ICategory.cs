@@ -12,5 +12,6 @@ namespace DoAnTinHoc
         void initCategoryList(ref Category headOfCategory);
         bool validateCategory(string newCategoryName);
         Category getNewCategory();
+        void updateCategory(ref Category headOfCategory, Category updateCategory);
     }
 }

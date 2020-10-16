@@ -21,6 +21,7 @@ namespace DoAnTinHoc
 
 
             categoryService.addNewCategory(ref headOfCategoryList);
+
             Console.ReadLine();
         }
     }

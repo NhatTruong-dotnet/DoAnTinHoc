@@ -20,6 +20,7 @@ namespace DoAnTinHoc
             if (!categoryRepo.validateCategory(newCategory.Name))
             {
                 categoryRepo.insertCategory(ref headOfCategory, newCategory);
+                Console.WriteLine("Insert success");
             }
             else
             {
