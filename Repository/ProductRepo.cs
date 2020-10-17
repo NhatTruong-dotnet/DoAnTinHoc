@@ -217,18 +217,29 @@ namespace DoAnTinHoc
         public void updateProduct(ref Product headOfProduct, Product updatedProduct, string needToUpdateProduct)
         {
             Product cloneOfHeadProduct = headOfProduct;
-            while (cloneOfHeadProduct.NextProduct != headOfProduct)
+
+            if (cloneOfHeadProduct.Name.Equals(needToUpdateProduct))
             {
-                if (cloneOfHeadProduct.Name != needToUpdateProduct)
+                cloneOfHeadProduct.Name = updatedProduct.Name;
+                cloneOfHeadProduct.Amount = updatedProduct.Amount;
+                cloneOfHeadProduct.Price = updatedProduct.Price;
+            }
+            else
+            {
+                int theFirstId = headOfProduct.IdProduct;
+                cloneOfHeadProduct = cloneOfHeadProduct.NextProduct;
+                while (cloneOfHeadProduct.IdProduct != theFirstId)
                 {
-                    cloneOfHeadProduct = cloneOfHeadProduct.NextProduct;
-                }
-                else
-                {
-                    cloneOfHeadProduct.Name = updatedProduct.Name;
-                    cloneOfHeadProduct.Amount = updatedProduct.Amount;
-                    cloneOfHeadProduct.Price = updatedProduct.Price;
-                    break;
+                    if (cloneOfHeadProduct.Name.Equals(needToUpdateProduct))
+                    {
+                        cloneOfHeadProduct.Name = updatedProduct.Name;
+                        cloneOfHeadProduct.Amount = updatedProduct.Amount;
+                        cloneOfHeadProduct.Price = updatedProduct.Price;
+                    }
+                    else
+                    {
+                        cloneOfHeadProduct = cloneOfHeadProduct.NextProduct;
+                    }
                 }
             }
         }

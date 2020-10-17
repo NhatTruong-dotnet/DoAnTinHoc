@@ -73,7 +73,7 @@ namespace DoAnTinHoc
             }
         }
 
-        public void deleteCategory(ref Category headOfCategory, Category deleteCategory)
+        public void deleteCategory(ref Category headOfCategory, string deleteCategoryName)
         {
             if (headOfCategory == null)
                 Console.WriteLine("This List is Empty");
@@ -87,7 +87,7 @@ namespace DoAnTinHoc
                     headOfCategory = null;
                 else
                 {
-                    if (cloneOfProduct.Name == deleteCategory.Name)
+                    if (cloneOfProduct.Name == deleteCategoryName)
                     {
                         int theFirstId = headOfCategory.IdCategory;
                         headOfCategory = cloneOfProduct.NextCategory;
@@ -104,7 +104,7 @@ namespace DoAnTinHoc
                         cloneOfProduct = cloneOfProduct.NextCategory;
                         while (cloneOfProduct.NextCategory.Name != headOfCategory.NextCategory.Name)
                         {
-                            if (cloneOfProduct.Name == deleteCategory.Name)
+                            if (cloneOfProduct.Name == deleteCategoryName)
                             {
                                 pointerInLoop.NextCategory = cloneOfProduct.NextCategory;
                                 Console.WriteLine("Deleted");
@@ -120,21 +120,11 @@ namespace DoAnTinHoc
 
         }
 
-        public void updateCategory(ref Category headOfCategory, Category updateCategory, Category needUpdatedCategory)
+        public void updateCategory(ref Category headOfCategory, Category updateCategory, string needUpdatedCategory)
         {
             Category cloneOfHeadCategory = headOfCategory;
-            while (cloneOfHeadCategory.NextCategory != headOfCategory)
-            {
-                if (cloneOfHeadCategory.Name != needUpdatedCategory.Name.Trim())
-                {
-                    cloneOfHeadCategory = cloneOfHeadCategory.NextCategory;
-                }
-                else
-                {
-                    cloneOfHeadCategory.Name = updateCategory.Name.Trim();
-                    break;
-                }
-            }
+           
+        
         }
         #endregion
         public bool validateCategory(string newCategoryName)

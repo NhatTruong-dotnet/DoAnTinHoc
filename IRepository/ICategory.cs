@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.SqlServer.Server;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,8 +12,8 @@ namespace DoAnTinHoc
         #region UI
         void insertCategory(ref Category headOfCategory, Category newCategory);
         void loadCategoryList(ref Category headOfCategory);
-        void deleteCategory(ref Category headOfCategory, Category deleteCategory);
-        void updateCategory(ref Category headOfCategory, Category updateCategory, Category needUpdateCategory);
+        void deleteCategory(ref Category headOfCategory, string deleteCategoryName);
+        void updateCategory(ref Category headOfCategory, Category updateCategory, string needUpdateProduct);
         #endregion
 
         #region File
