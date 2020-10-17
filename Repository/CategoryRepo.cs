@@ -33,20 +33,23 @@ namespace DoAnTinHoc
         {
             // lấy dữ liệu các mặt hàng có sẵn trong danh sách
             string[] categoryList = File.ReadAllLines(filePath);
-            // sure là thằng đầu tiên sẽ là con trỏ rồi nên lấy nó ra khỏi cái list mặt hàng
-            string[] headOfCategoryContent = categoryList[0].Split(',');
-            // bỏ đi thằng head lúc nãy, danh sách giờ chỉ còn những thằng tiếp theo của nó thôi
-            categoryList = categoryList.Skip(1).ToArray();
-            // nếu thằng đầu tiên rỗng thì chưa có danh sách
-            if (headOfCategoryContent.Length == 0)
+            if (categoryList.Length == 0)
             {
-                // làm luôn trường hợp khởi tạo rỗng nha
                 Console.WriteLine("File empty");
             }
             else
             {
+                // sure là thằng đầu tiên sẽ là con trỏ rồi nên lấy nó ra khỏi cái list mặt hàng
+                string[] headOfCategoryContent = categoryList[0].Split(',');
+                // bỏ đi thằng head lúc nãy, danh sách giờ chỉ còn những thằng tiếp theo của nó thôi
+                categoryList = categoryList.Skip(1).ToArray();
+                // nếu thằng đầu tiên rỗng thì chưa có danh sách
                 // khởi tạo head
-                headOfCategory = new Category { IdCategory = Int32.Parse(headOfCategoryContent[0]), Name = headOfCategoryContent[1].ToString().Trim() };
+                headOfCategory = new Category
+                {
+                    IdCategory = Int32.Parse(headOfCategoryContent[0]),
+                    Name = headOfCategoryContent[1].ToString().Trim()
+                };
                 // nếu những thằng phía sau nó có tồn tại
                 if (categoryList.Length != 0)
                 {
@@ -55,8 +58,14 @@ namespace DoAnTinHoc
                     {
                         // tách chuỗi, để lấy thông tin
                         string[] tempCategoryContent = item.Split(',');
-                        // Khởi tạo thằng category mà head liên kết tới
-                        Category temp = new Category(Int32.Parse(tempCategoryContent[0]), tempCategoryContent[1].ToString().Trim());
+                        // Lấy thông tin
+
+                        // Khởi tạo thằng product mà head liên kết tới
+                        Category temp = new Category
+                        {
+                            IdCategory = Int32.Parse(tempCategoryContent[0]),
+                            Name = tempCategoryContent[1].ToString().Trim()
+                        };
                         // thêm nó vào danh sách đã có
                         insertCategory(ref headOfCategory, temp);
                     }
@@ -66,39 +75,49 @@ namespace DoAnTinHoc
 
         public void deleteCategory(ref Category headOfCategory, Category deleteCategory)
         {
-            loadCategoryList(ref headOfCategory);
-
             if (headOfCategory == null)
                 Console.WriteLine("This List is Empty");
-            Category cloneOfCategory = headOfCategory;
-            Category pointerInLoop = new Category();
-            // Kiểm tra xem nút có phải là nút duy nhất không
-            if (cloneOfCategory.NextCategory == headOfCategory)
-                headOfCategory = null;
             else
             {
-                if (cloneOfCategory.Name == deleteCategory.Name)
-                {
-                    headOfCategory = cloneOfCategory.NextCategory;
-                }
+                // sure là thằng đầu tiên sẽ là con trỏ rồi nên lấy nó ra khỏi cái list mặt hàng
+                Category cloneOfProduct = headOfCategory;
+                Category pointerInLoop = new Category();
+                // Kiểm tra xem nút có phải là nút duy nhất không
+                if (cloneOfProduct.NextCategory == headOfCategory)
+                    headOfCategory = null;
                 else
                 {
-                    pointerInLoop = cloneOfCategory;
-                    cloneOfCategory = cloneOfCategory.NextCategory;
-                    while (cloneOfCategory.NextCategory != headOfCategory)
+                    if (cloneOfProduct.Name == deleteCategory.Name)
                     {
-                        if (cloneOfCategory.Name == deleteCategory.Name)
+                        int theFirstId = headOfCategory.IdCategory;
+                        headOfCategory = cloneOfProduct.NextCategory;
+                        cloneOfProduct = headOfCategory;
+                        while (cloneOfProduct.NextCategory.IdCategory != theFirstId)
                         {
-                            pointerInLoop.NextCategory = cloneOfCategory.NextCategory;
-                            Console.WriteLine("Deleted");
-                            break;
+                            cloneOfProduct = cloneOfProduct.NextCategory;
                         }
-                        cloneOfCategory = cloneOfCategory.NextCategory;
-                        pointerInLoop = pointerInLoop.NextCategory;
+                        cloneOfProduct.NextCategory = headOfCategory;
+                    }
+                    else
+                    {
+                        pointerInLoop = cloneOfProduct;
+                        cloneOfProduct = cloneOfProduct.NextCategory;
+                        while (cloneOfProduct.NextCategory.Name != headOfCategory.NextCategory.Name)
+                        {
+                            if (cloneOfProduct.Name == deleteCategory.Name)
+                            {
+                                pointerInLoop.NextCategory = cloneOfProduct.NextCategory;
+                                Console.WriteLine("Deleted");
+                                break;
+                            }
+                            cloneOfProduct = cloneOfProduct.NextCategory;
+                            pointerInLoop = pointerInLoop.NextCategory;
+                        }
                     }
                 }
+
             }
-  
+
         }
 
         public void updateCategory(ref Category headOfCategory, Category updateCategory, Category needUpdatedCategory)
@@ -116,7 +135,6 @@ namespace DoAnTinHoc
                     break;
                 }
             }
-            
         }
         #endregion
         public bool validateCategory(string newCategoryName)
@@ -127,7 +145,7 @@ namespace DoAnTinHoc
             {
                 if (item.Contains(newCategoryName))
                 {
-                    result = true;
+                    return result = true;
                 }
             }
             return result;
@@ -138,7 +156,7 @@ namespace DoAnTinHoc
             // đọc file dữ liệu
             string[] lastCategory = File.ReadAllLines(filePath).Last().Split(',');
             Console.Write("Enter your category: ");
-            string nameCategory = Console.ReadLine().ToLower();
+            string nameCategory = Console.ReadLine().ToLower().Trim();
             int idCategory = Int32.Parse(lastCategory[0]);
             Category returnCategory = new Category(idCategory+1, nameCategory);
             return returnCategory;
@@ -149,7 +167,10 @@ namespace DoAnTinHoc
             Category cloneOfHeadCategory = headOfCategory;
             File.WriteAllText(filePath, String.Empty);
             string category =
-                    cloneOfHeadCategory.IdCategory.ToString() + ',' + cloneOfHeadCategory.Name + ',' + cloneOfHeadCategory.NextCategory.IdCategory.ToString();
+                    cloneOfHeadCategory.IdCategory.ToString() + ',' 
+                    + cloneOfHeadCategory.Name + ',' 
+                    + cloneOfHeadCategory.NextCategory.IdCategory.ToString();
+
             using (StreamWriter datafile = File.AppendText(filePath))
             {
                 datafile.WriteLine(category);
@@ -158,7 +179,10 @@ namespace DoAnTinHoc
             while (cloneOfHeadCategory.IdCategory != headOfCategory.IdCategory)
             {
                 category =
-                    cloneOfHeadCategory.IdCategory.ToString() + ',' + cloneOfHeadCategory.Name + ',' + cloneOfHeadCategory.NextCategory.IdCategory.ToString();
+                    cloneOfHeadCategory.IdCategory.ToString() + ',' 
+                    + cloneOfHeadCategory.Name + ',' 
+                    + cloneOfHeadCategory.NextCategory.IdCategory.ToString();
+
                 using (StreamWriter datafile = File.AppendText(filePath))
                 {
                     datafile.WriteLine(category);

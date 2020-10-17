@@ -18,6 +18,7 @@ namespace DoAnTinHoc
 
         public void AddNewCategory(ref Category headOfCategory)
         {
+            
             CategoryRepo categoryRepo = new CategoryRepo();
             Category newCategory = categoryRepo.getNewCategory();
             if (categoryRepo.validateCategory(newCategory.Name))
@@ -37,14 +38,14 @@ namespace DoAnTinHoc
             CategoryRepo categoryRepo = new CategoryRepo();
             Category deleteCategory = categoryRepo.getNewCategory();
 
-            if (!categoryRepo.validateCategory(deleteCategory.Name))
+            if (categoryRepo.validateCategory(deleteCategory.Name))
             {
                 categoryRepo.deleteCategory(ref headOfCategory, deleteCategory);
-                categoryRepo.updateFile(ref headOfCategory);
+                categoryRepo.updateFile(ref headOfCategory); 
             }
             else
             {
-                 Console.WriteLine("This category not in list");
+                Console.WriteLine("This category not in list");
             }
            
         }

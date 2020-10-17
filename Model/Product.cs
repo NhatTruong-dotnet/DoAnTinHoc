@@ -13,7 +13,7 @@ namespace DoAnTinHoc
         public string Name { get; set; }
         // so luong
         public int Amount { get; set; }
-        public float Price { get; set; }
+        public double Price { get; set; }
         // san pham tiep theo
         public Product NextProduct { get; set; }
         #endregion
@@ -21,9 +21,9 @@ namespace DoAnTinHoc
         #region Constructor
         public Product()
         {
-            NextProduct = null;
+            NextProduct = this;
         }
-        public Product(int idProduct, string name, int amount, float price)
+        public Product(int idProduct, string name, int amount, double price)
         {
             this.IdProduct = idProduct;
             this.Name = name;
