@@ -123,8 +123,28 @@ namespace DoAnTinHoc
         public void updateCategory(ref Category headOfCategory, Category updateCategory, string needUpdatedCategory)
         {
             Category cloneOfHeadCategory = headOfCategory;
-           
-        
+
+            if (cloneOfHeadCategory.Name.Equals(needUpdatedCategory))
+            {
+                cloneOfHeadCategory.Name = updateCategory.Name;
+            }
+            else
+            {
+                int theFirstId = headOfCategory.IdCategory;
+                cloneOfHeadCategory = cloneOfHeadCategory.NextCategory;
+                while (cloneOfHeadCategory.IdCategory != theFirstId)
+                {
+                    if (cloneOfHeadCategory.Name.Equals(needUpdatedCategory))
+                    {
+                        cloneOfHeadCategory.Name = updateCategory.Name;
+                    }
+                    else
+                    {
+                        cloneOfHeadCategory = cloneOfHeadCategory.NextCategory;
+                    }
+                }
+            }
+
         }
         #endregion
         public bool validateCategory(string newCategoryName)
