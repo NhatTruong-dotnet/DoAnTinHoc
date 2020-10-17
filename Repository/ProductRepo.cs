@@ -11,7 +11,7 @@ namespace DoAnTinHoc
     public class ProductRepo : IProduct
     {
 
-        const string filePath = @"C:\Users\Dell\Desktop\ConsoleApp1\ConsoleApp2\ProductData.txt";
+        const string filePath = @"C:\NhatTruong\Project\DoAnTinHoc\Data\ProductData.txt";
         #region Function
         // Thêm một mặt hàng mới vào danh sách
 
@@ -136,6 +136,7 @@ namespace DoAnTinHoc
             }
             return result;
         }
+<<<<<<< HEAD
         public bool validateProductAmountPrice(int Amount, double Price)
         {
             bool result = false;
@@ -144,6 +145,15 @@ namespace DoAnTinHoc
                 return result = true;
             }
 
+=======
+        public bool validateProduct(int Amount, double Price)
+        {
+            bool result = false;
+                if (Amount > 0 && Price > 0)
+                {
+                    return result = true;
+                }
+>>>>>>> 2adf36ebb52976d404c8b896225e55fd9389913c
             return result;
         }
         public Product getNewProduct()
@@ -244,7 +254,11 @@ namespace DoAnTinHoc
                         cloneOfHeadProduct.Amount = updatedProduct.Amount;
                         cloneOfHeadProduct.Price = updatedProduct.Price;
                     }
+<<<<<<< HEAD
                     else
+=======
+                    else if (validateProduct(cloneOfHeadProduct.Amount, cloneOfHeadProduct.Price))
+>>>>>>> 2adf36ebb52976d404c8b896225e55fd9389913c
                     {
                         cloneOfHeadProduct = cloneOfHeadProduct.NextProduct;
                     }

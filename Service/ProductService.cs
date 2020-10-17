@@ -25,7 +25,7 @@ namespace DoAnTinHoc
             {
                 Console.WriteLine("Item already inserted");
             }
-            else if (ProductRepo.validateProductAmountPrice(newProduct.Amount, newProduct.Price))
+            else if (ProductRepo.validateProduct(newProduct.Amount, newProduct.Price))
             {
                 ProductRepo.insertProduct(ref headOfProduct, newProduct);
                 ProductRepo.updateFile(ref headOfProduct);
@@ -59,6 +59,7 @@ namespace DoAnTinHoc
                 }
             }
         }
+
         public void UpdateProduct(ref Product headOfProduct)
         {
             if (headOfProduct == null)
