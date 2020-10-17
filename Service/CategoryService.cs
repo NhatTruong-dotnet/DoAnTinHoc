@@ -81,7 +81,6 @@ namespace DoAnTinHoc
                     Console.WriteLine("This category not in list");
                 }
             }
-            
         }
 
         public void ShowCategoryList(Category headOfCategory)

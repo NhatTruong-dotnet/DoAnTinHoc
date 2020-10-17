@@ -53,6 +53,29 @@ namespace DoAnTinHoc
                 }
             }
         }
-
+        public void UpdateCategory(ref Product headOfProduct)
+        {
+            if (headOfProduct == null)
+            {
+                Console.WriteLine("This list is empty now");
+            }
+            else
+            {
+                ProductRepo productRepo = new ProductRepo();
+                Console.WriteLine("The Product want to update");
+                string needUpdateProduct = Console.ReadLine().Trim().ToLower();
+                Console.WriteLine("Update content");
+                Product updatedProduct = productRepo.getNewProduct();
+                if (productRepo.validateProduct(needUpdateProduct))
+                {
+                    productRepo.updateProduct(ref headOfProduct, updatedProduct, needUpdateProduct);
+                    productRepo.updateFile(ref headOfProduct);
+                }
+                else
+                {
+                    Console.WriteLine("This category not in list");
+                }
+            }
+        }
     }
 }

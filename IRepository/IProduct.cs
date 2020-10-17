@@ -13,7 +13,7 @@ namespace DoAnTinHoc
         void insertProduct(ref Product headOfProduct, Product newProduct);
         void loadProductList(ref Product headOfProduct);
         void deleteProduct(ref Product headOfProduct, Product deleteProduct);
-        void updateProduct(ref Product headOfProduct, Product updatedProduct, Product needToUpdateProduct);
+        void updateProduct(ref Product headOfProduct, Product updatedProduct, string needToUpdateProduct);
         #endregion
 
         #region File

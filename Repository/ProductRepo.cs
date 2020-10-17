@@ -165,7 +165,7 @@ namespace DoAnTinHoc
                     Price = price
                 };
             }
-            Console.Write("Enter your category: ");
+            Console.Write("Enter your Product: ");
             nameProduct = Console.ReadLine().ToLower().Trim();
             Console.Write("Enter your amount: ");
             amount = Int32.Parse(Console.ReadLine());
@@ -173,7 +173,7 @@ namespace DoAnTinHoc
             price = Convert.ToDouble(Console.ReadLine());
                 
             string[] lastProduct = File.ReadAllLines(filePath).Last().Split(',');
-            idProduct = Int32.Parse(lastProduct[0] + 1);
+            idProduct = Int32.Parse(lastProduct[0])+1;
             return returnProduct = new Product
             {
                 IdProduct = idProduct,
@@ -214,12 +214,12 @@ namespace DoAnTinHoc
             }
         }
 
-        public void updateProduct(ref Product headOfProduct, Product updatedProduct, Product needToUpdateProduct)
+        public void updateProduct(ref Product headOfProduct, Product updatedProduct, string needToUpdateProduct)
         {
             Product cloneOfHeadProduct = headOfProduct;
             while (cloneOfHeadProduct.NextProduct != headOfProduct)
             {
-                if (cloneOfHeadProduct.Name != needToUpdateProduct.Name)
+                if (cloneOfHeadProduct.Name != needToUpdateProduct)
                 {
                     cloneOfHeadProduct = cloneOfHeadProduct.NextProduct;
                 }
