@@ -154,12 +154,25 @@ namespace DoAnTinHoc
         public Category getNewCategory()
         {
             // đọc file dữ liệu
-            string[] lastCategory = File.ReadAllLines(filePath).Last().Split(',');
+            string nameCategory ="";
+            int idCategory = 1;
+            Category returnCategory = new Category();
+            try
+            {
+                File.ReadAllLines(filePath).Last().Split(',');
+            }
+            catch (Exception)
+            {
+                Console.Write("Enter your category: ");
+                nameCategory = Console.ReadLine().ToLower().Trim();
+                return returnCategory = new Category { IdCategory = idCategory, Name = nameCategory };
+            }
             Console.Write("Enter your category: ");
-            string nameCategory = Console.ReadLine().ToLower().Trim();
-            int idCategory = Int32.Parse(lastCategory[0]);
-            Category returnCategory = new Category(idCategory+1, nameCategory);
-            return returnCategory;
+            nameCategory = Console.ReadLine().ToLower().Trim();
+                
+            string[] lastCategory = File.ReadAllLines(filePath).Last().Split(',');
+            idCategory = Int32.Parse(lastCategory[0]) + 1;
+            return returnCategory = new Category { IdCategory = idCategory, Name = nameCategory };
         }
 
         public void updateFile(ref Category headOfCategory)

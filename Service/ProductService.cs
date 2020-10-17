@@ -35,17 +35,24 @@ namespace DoAnTinHoc
         public void DeleteProduct(ref Product headOfProduct)
         {
             ProductRepo ProductRepo = new ProductRepo();
-            Product deleteProduct = ProductRepo.getNewProduct();
-            if (ProductRepo.validateProduct(deleteProduct.Name))
+            if (headOfProduct == null)
             {
-                ProductRepo.deleteProduct(ref headOfProduct, deleteProduct);
-                ProductRepo.updateFile(ref headOfProduct);
+                Console.WriteLine("This list is empty now");
             }
             else
             {
-                Console.WriteLine("This Product not in list");
+                Product deleteProduct = ProductRepo.getNewProduct();
+                if (ProductRepo.validateProduct(deleteProduct.Name))
+                {
+                    ProductRepo.deleteProduct(ref headOfProduct, deleteProduct);
+                    ProductRepo.updateFile(ref headOfProduct);
+                }
+                else
+                {
+                    Console.WriteLine("This Product not in list");
+                }
             }
-
         }
+
     }
 }

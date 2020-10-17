@@ -14,18 +14,17 @@ namespace DoAnTinHoc
     {
         public static void Main()
         {
-            //init CategoryList
-            //Product headOfProduct = new Product();
-            //ProductService productService = new ProductService();
-            //productService.LoadProductList(ref headOfProduct);
-            //productService.DeleteProduct(ref headOfProduct);
-            //Console.WriteLine(headOfProduct.Name);
+            
+            Product headOfProduct = new Product();
+            ProductService productService = new ProductService();
+            productService.LoadProductList(ref headOfProduct);
+            productService.AddNewProduct(ref headOfProduct);
+            Console.WriteLine(headOfProduct.Name);
 
-            Category headOfCategory = new Category();
-            CategoryService categoryService = new CategoryService();
-            categoryService.LoadCategoryList(ref headOfCategory);
-            categoryService.AddNewCategory(ref headOfCategory);
-            Console.WriteLine(headOfCategory.Name);
+            //Category headOfCategory = new Category();
+            //CategoryService categoryService = new CategoryService();
+
+            //Console.WriteLine(headOfCategory.Name);
             Console.ReadLine();
         }
     }

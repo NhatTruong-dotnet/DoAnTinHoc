@@ -45,11 +45,12 @@ namespace DoAnTinHoc
                 ProductList = ProductList.Skip(1).ToArray();
                 // nếu thằng đầu tiên rỗng thì chưa có danh sách
                 // khởi tạo head
-                headOfProduct = new Product {
+                headOfProduct = new Product
+                {
                     IdProduct = Int32.Parse(headOfProductContent[0]),
-                    Name = headOfProductContent[1].ToString().Trim(), 
-                    Amount = Int32.Parse(headOfProductContent[2]), 
-                    Price = Convert.ToDouble(headOfProductContent[3]) 
+                    Name = headOfProductContent[1].ToString().Trim(),
+                    Amount = Int32.Parse(headOfProductContent[2]),
+                    Price = Convert.ToDouble(headOfProductContent[3])
                 };
                 // nếu những thằng phía sau nó có tồn tại
                 if (ProductList.Length != 0)
@@ -62,11 +63,12 @@ namespace DoAnTinHoc
                         // Lấy thông tin
 
                         // Khởi tạo thằng product mà head liên kết tới
-                        Product temp = new Product { 
-                            IdProduct = Int32.Parse(tempProductContent[0]), 
-                            Name = tempProductContent[1].ToString().Trim(), 
-                            Amount = Int32.Parse(tempProductContent[2]), 
-                            Price = Convert.ToDouble(tempProductContent[3]) 
+                        Product temp = new Product
+                        {
+                            IdProduct = Int32.Parse(tempProductContent[0]),
+                            Name = tempProductContent[1].ToString().Trim(),
+                            Amount = Int32.Parse(tempProductContent[2]),
+                            Price = Convert.ToDouble(tempProductContent[3])
                         };
                         // thêm nó vào danh sách đã có
                         insertProduct(ref headOfProduct, temp);
@@ -138,16 +140,47 @@ namespace DoAnTinHoc
         public Product getNewProduct()
         {
             // đọc file dữ liệu
+            string nameProduct = "";
+            int idProduct = 1;
+            int amount = 1;
+            double price = 1.0;
+            Product returnProduct = new Product();
+            try
+            {
+                File.ReadAllLines(filePath).Last().Split(',');
+            }
+            catch (Exception)
+            {
+                Console.Write("Enter your category: ");
+                nameProduct = Console.ReadLine().ToLower().Trim();
+                Console.Write("Enter your amount: ");
+                amount = Int32.Parse(Console.ReadLine());
+                Console.Write("Enter your price: ");
+                price = Convert.ToDouble(Console.ReadLine());
+                return returnProduct = new Product
+                {
+                    IdProduct = idProduct,
+                    Name = nameProduct,
+                    Amount = amount,
+                    Price = price
+                };
+            }
+            Console.Write("Enter your category: ");
+            nameProduct = Console.ReadLine().ToLower().Trim();
+            Console.Write("Enter your amount: ");
+            amount = Int32.Parse(Console.ReadLine());
+            Console.Write("Enter your price: ");
+            price = Convert.ToDouble(Console.ReadLine());
+                
             string[] lastProduct = File.ReadAllLines(filePath).Last().Split(',');
-            Console.Write("Enter your Product: ");
-            string nameProduct = Console.ReadLine().ToLower().Trim();
-            int idProduct = Int32.Parse(lastProduct[0]);
-            Console.Write("Amount:");
-            int amoutProduct = Int32.Parse(Console.ReadLine());
-            Console.Write("Price:");
-            float priceProduct = float.Parse(Console.ReadLine());
-            Product returnProduct = new Product(idProduct + 1, nameProduct, amoutProduct, priceProduct);
-            return returnProduct;
+            idProduct = Int32.Parse(lastProduct[0] + 1);
+            return returnProduct = new Product
+            {
+                IdProduct = idProduct,
+                Name = nameProduct,
+                Amount = amount,
+                Price = price
+            };
         }
 
         public void updateFile(ref Product headOfProduct)
