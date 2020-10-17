@@ -54,7 +54,8 @@ namespace DoAnTinHoc
                 }
             }
         }
-        public void UpdateCategory(ref Product headOfProduct)
+
+        public void UpdateProduct(ref Product headOfProduct)
         {
             if (headOfProduct == null)
             {
