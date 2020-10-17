@@ -41,7 +41,7 @@ namespace DoAnTinHoc
             {
                 // sure là thằng đầu tiên sẽ là con trỏ rồi nên lấy nó ra khỏi cái list mặt hàng
                 string[] headOfCategoryContent = categoryList[0].Split(',');
-                // bỏ đi thằng head lúc nãy, danh sách giờ chỉ còn những thằng tiếp theo của nó thôi
+                // bỏ đi thằng head lúc nãy, danh s8ách giờ chỉ còn những thằng tiếp theo của nó thôi
                 categoryList = categoryList.Skip(1).ToArray();
                 // nếu thằng đầu tiên rỗng thì chưa có danh sách
                 // khởi tạo head
