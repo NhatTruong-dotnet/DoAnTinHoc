@@ -77,7 +77,7 @@ namespace DoAnTinHoc
             }
         }
 
-        public void deleteProduct(ref Product headOfProduct, Product deleteProduct)
+        public void deleteProduct(ref Product headOfProduct, string deleteProductName)
         {
             if (headOfProduct == null)
                 Console.WriteLine("This List is Empty");
@@ -91,7 +91,7 @@ namespace DoAnTinHoc
                     headOfProduct = null;
                 else
                 {
-                    if (cloneOfProduct.Name == deleteProduct.Name)
+                    if (cloneOfProduct.Name == deleteProductName)
                     {
                         int theFirstId = headOfProduct.IdProduct;
                         headOfProduct = cloneOfProduct.NextProduct;
@@ -108,7 +108,7 @@ namespace DoAnTinHoc
                         cloneOfProduct = cloneOfProduct.NextProduct;
                         while (cloneOfProduct.NextProduct.Name != headOfProduct.NextProduct.Name)
                         {
-                            if (cloneOfProduct.Name == deleteProduct.Name)
+                            if (cloneOfProduct.Name == deleteProductName)
                             {
                                 pointerInLoop.NextProduct = cloneOfProduct.NextProduct;
                                 Console.WriteLine("Deleted");
@@ -123,7 +123,7 @@ namespace DoAnTinHoc
             }
         }
         #endregion
-        public bool validateProduct(string productName)
+        public bool validateProductName(string productName)
         {
             bool result = false;
             string[] ProductList = File.ReadAllLines(filePath);
