@@ -76,7 +76,6 @@ namespace DoAnTinHoc
                 }
             }
         }
-
         public void deleteProduct(ref Product headOfProduct, string deleteProductName)
         {
             if (headOfProduct == null)
@@ -137,6 +136,16 @@ namespace DoAnTinHoc
             }
             return result;
         }
+<<<<<<< HEAD
+        public bool validateProductAmountPrice(int Amount, double Price)
+        {
+            bool result = false;
+            if (Amount > 0 && Price > 0)
+            {
+                return result = true;
+            }
+
+=======
         public bool validateProduct(int Amount, double Price)
         {
             bool result = false;
@@ -144,6 +153,7 @@ namespace DoAnTinHoc
                 {
                     return result = true;
                 }
+>>>>>>> 2adf36ebb52976d404c8b896225e55fd9389913c
             return result;
         }
         public Product getNewProduct()
@@ -222,7 +232,6 @@ namespace DoAnTinHoc
                 cloneOfHeadProduct = cloneOfHeadProduct.NextProduct;
             }
         }
-
         public void updateProduct(ref Product headOfProduct, Product updatedProduct, string needToUpdateProduct)
         {
             Product cloneOfHeadProduct = headOfProduct;
@@ -245,12 +254,30 @@ namespace DoAnTinHoc
                         cloneOfHeadProduct.Amount = updatedProduct.Amount;
                         cloneOfHeadProduct.Price = updatedProduct.Price;
                     }
+<<<<<<< HEAD
+                    else
+=======
                     else if (validateProduct(cloneOfHeadProduct.Amount, cloneOfHeadProduct.Price))
+>>>>>>> 2adf36ebb52976d404c8b896225e55fd9389913c
                     {
                         cloneOfHeadProduct = cloneOfHeadProduct.NextProduct;
                     }
                 }
             }
+        }
+        public bool CheckNamePoduct(string productCheckName)
+        {
+            bool result = false;
+            string[] ProductList = File.ReadAllLines(filePath);
+            foreach (var item in ProductList)
+            {
+                string[] itemConetent = item.Split(',');
+                if (item[1].Equals(productCheckName))
+                {
+                    return true;
+                }
+            }
+            return result;
         }
     }
     #endregion

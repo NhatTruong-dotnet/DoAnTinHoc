@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -81,6 +82,23 @@ namespace DoAnTinHoc
                 {
                     Console.WriteLine("This category not in list");
                 }
+            }
+        }
+        public void ShowProduct()
+        {
+            ProductRepo ProductRepo = new ProductRepo();
+            Product newProduct = ProductRepo.getNewProduct();
+            if (!ProductRepo.validateProductName(newProduct.Name))
+            {
+                Product productchecked = new Product();
+                Console.Write("ID: " + productchecked.IdProduct + " ");
+                Console.Write("Name: " + productchecked.Name + " ");
+                Console.Write("Amount: " + productchecked.Amount + " ");
+                Console.Write("Price: " + productchecked.Price + " ");
+            }
+            else
+            {
+                Console.WriteLine("Not found!!!!");
             }
         }
     }

@@ -21,6 +21,7 @@ namespace DoAnTinHoc
         #endregion
 
         bool validateProductName(string IdProductName);
+        bool validateProductAmountPrice(int Amount, double Price);
         Product getNewProduct();
     }
 }
