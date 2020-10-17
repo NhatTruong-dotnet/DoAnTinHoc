@@ -18,8 +18,9 @@ namespace DoAnTinHoc
             Product headOfProduct = new Product();
             ProductService productService = new ProductService();
             productService.LoadProductList(ref headOfProduct);
-            productService.UpdateCategory(ref headOfProduct);
-            Console.WriteLine(headOfProduct.Name);
+            productService.AddNewProduct(ref headOfProduct);
+            productService.UpdateProduct(ref headOfProduct);
+           // Console.WriteLine(headOfProduct.Name);
 
             //Category headOfCategory = new Category();
             //CategoryService categoryService = new CategoryService();

@@ -11,7 +11,7 @@ namespace DoAnTinHoc
     public class ProductRepo : IProduct
     {
 
-        const string filePath = @"C:\NhatTruong\Project\DoAnTinHoc\Data\ProductData.txt";
+        const string filePath = @"C:\Users\Dell\Desktop\ConsoleApp1\ConsoleApp2\ProductData.txt";
         #region Function
         // Thêm một mặt hàng mới vào danh sách
 
@@ -77,7 +77,7 @@ namespace DoAnTinHoc
             }
         }
 
-        public void deleteProduct(ref Product headOfProduct, Product deleteProduct)
+        public void deleteProduct(ref Product headOfProduct, string deleteProductName)
         {
             if (headOfProduct == null)
                 Console.WriteLine("This List is Empty");
@@ -91,7 +91,7 @@ namespace DoAnTinHoc
                     headOfProduct = null;
                 else
                 {
-                    if (cloneOfProduct.Name == deleteProduct.Name)
+                    if (cloneOfProduct.Name == deleteProductName)
                     {
                         int theFirstId = headOfProduct.IdProduct;
                         headOfProduct = cloneOfProduct.NextProduct;
@@ -108,7 +108,7 @@ namespace DoAnTinHoc
                         cloneOfProduct = cloneOfProduct.NextProduct;
                         while (cloneOfProduct.NextProduct.Name != headOfProduct.NextProduct.Name)
                         {
-                            if (cloneOfProduct.Name == deleteProduct.Name)
+                            if (cloneOfProduct.Name == deleteProductName)
                             {
                                 pointerInLoop.NextProduct = cloneOfProduct.NextProduct;
                                 Console.WriteLine("Deleted");
@@ -136,7 +136,19 @@ namespace DoAnTinHoc
             }
             return result;
         }
-
+        public bool validateProductName(int Amount, double Price)
+        {
+            bool result = false;
+            string[] ProductListName = File.ReadAllLines(filePath);
+            foreach (var item in ProductListName)
+            {
+                if (Amount > 0 && Price > 0)
+                {
+                    return result = true;
+                }
+            }
+            return result;
+        }
         public Product getNewProduct()
         {
             // đọc file dữ liệu
@@ -217,18 +229,29 @@ namespace DoAnTinHoc
         public void updateProduct(ref Product headOfProduct, Product updatedProduct, string needToUpdateProduct)
         {
             Product cloneOfHeadProduct = headOfProduct;
-            while (cloneOfHeadProduct.NextProduct != headOfProduct)
+
+            if (cloneOfHeadProduct.Name.Equals(needToUpdateProduct))
             {
-                if (cloneOfHeadProduct.Name != needToUpdateProduct)
+                cloneOfHeadProduct.Name = updatedProduct.Name;
+                cloneOfHeadProduct.Amount = updatedProduct.Amount;
+                cloneOfHeadProduct.Price = updatedProduct.Price;
+            }
+            else
+            {
+                int theFirstId = headOfProduct.IdProduct;
+                cloneOfHeadProduct = cloneOfHeadProduct.NextProduct;
+                while (cloneOfHeadProduct.IdProduct != theFirstId)
                 {
-                    cloneOfHeadProduct = cloneOfHeadProduct.NextProduct;
-                }
-                else
-                {
-                    cloneOfHeadProduct.Name = updatedProduct.Name;
-                    cloneOfHeadProduct.Amount = updatedProduct.Amount;
-                    cloneOfHeadProduct.Price = updatedProduct.Price;
-                    break;
+                    if (cloneOfHeadProduct.Name.Equals(needToUpdateProduct))
+                    {
+                        cloneOfHeadProduct.Name = updatedProduct.Name;
+                        cloneOfHeadProduct.Amount = updatedProduct.Amount;
+                        cloneOfHeadProduct.Price = updatedProduct.Price;
+                    }
+                    else if (validateProductName(cloneOfHeadProduct.Amount, cloneOfHeadProduct.Price))
+                    {
+                        cloneOfHeadProduct = cloneOfHeadProduct.NextProduct;
+                    }
                 }
             }
         }

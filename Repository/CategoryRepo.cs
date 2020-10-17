@@ -11,7 +11,7 @@ namespace DoAnTinHoc
     public class CategoryRepo : ICategory
     {
 
-        const string filePath = @"C:\NhatTruong\Project\DoAnTinHoc\Data\CategoryData.txt";
+        const string filePath = @"C:\Users\Dell\Desktop\ConsoleApp1\ConsoleApp2\CategoryData.txt";
         #region Function
         // Thêm một mặt hàng mới vào danh sách
 
@@ -73,7 +73,7 @@ namespace DoAnTinHoc
             }
         }
 
-        public void deleteCategory(ref Category headOfCategory, Category deleteCategory)
+        public void deleteCategory(ref Category headOfCategory, string deleteCategoryName)
         {
             if (headOfCategory == null)
                 Console.WriteLine("This List is Empty");
@@ -87,7 +87,7 @@ namespace DoAnTinHoc
                     headOfCategory = null;
                 else
                 {
-                    if (cloneOfProduct.Name == deleteCategory.Name)
+                    if (cloneOfProduct.Name == deleteCategoryName)
                     {
                         int theFirstId = headOfCategory.IdCategory;
                         headOfCategory = cloneOfProduct.NextCategory;
@@ -104,7 +104,7 @@ namespace DoAnTinHoc
                         cloneOfProduct = cloneOfProduct.NextCategory;
                         while (cloneOfProduct.NextCategory.Name != headOfCategory.NextCategory.Name)
                         {
-                            if (cloneOfProduct.Name == deleteCategory.Name)
+                            if (cloneOfProduct.Name == deleteCategoryName)
                             {
                                 pointerInLoop.NextCategory = cloneOfProduct.NextCategory;
                                 Console.WriteLine("Deleted");
@@ -120,21 +120,31 @@ namespace DoAnTinHoc
 
         }
 
-        public void updateCategory(ref Category headOfCategory, Category updateCategory, Category needUpdatedCategory)
+        public void updateCategory(ref Category headOfCategory, Category updateCategory, string needUpdatedCategory)
         {
             Category cloneOfHeadCategory = headOfCategory;
-            while (cloneOfHeadCategory.NextCategory != headOfCategory)
+
+            if (cloneOfHeadCategory.Name.Equals(needUpdatedCategory))
             {
-                if (cloneOfHeadCategory.Name != needUpdatedCategory.Name.Trim())
+                cloneOfHeadCategory.Name = updateCategory.Name;
+            }
+            else
+            {
+                int theFirstId = headOfCategory.IdCategory;
+                cloneOfHeadCategory = cloneOfHeadCategory.NextCategory;
+                while (cloneOfHeadCategory.IdCategory != theFirstId)
                 {
-                    cloneOfHeadCategory = cloneOfHeadCategory.NextCategory;
-                }
-                else
-                {
-                    cloneOfHeadCategory.Name = updateCategory.Name.Trim();
-                    break;
+                    if (cloneOfHeadCategory.Name.Equals(needUpdatedCategory))
+                    {
+                        cloneOfHeadCategory.Name = updateCategory.Name;
+                    }
+                    else
+                    {
+                        cloneOfHeadCategory = cloneOfHeadCategory.NextCategory;
+                    }
                 }
             }
+
         }
         #endregion
         public bool validateCategory(string newCategoryName)

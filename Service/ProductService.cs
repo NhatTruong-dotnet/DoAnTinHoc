@@ -20,15 +20,20 @@ namespace DoAnTinHoc
         {
             ProductRepo ProductRepo = new ProductRepo();
             Product newProduct = ProductRepo.getNewProduct();
-            if (ProductRepo.validateProduct(newProduct.Name))
+            if (ProductRepo.validateProductName(newProduct.Name))
             {
                 Console.WriteLine("Item already inserted");
             }
-            else
+            else if (ProductRepo.validateProductAmountPrice(newProduct.Amount, newProduct.Price))
             {
                 ProductRepo.insertProduct(ref headOfProduct, newProduct);
                 ProductRepo.updateFile(ref headOfProduct);
                 Console.WriteLine("Insert success");
+            }
+            else
+            {
+                Console.WriteLine("Vui long nhap so duong");
+                AddNewProduct(ref headOfProduct);
             }
         }
 
@@ -41,10 +46,11 @@ namespace DoAnTinHoc
             }
             else
             {
-                Product deleteProduct = ProductRepo.getNewProduct();
-                if (ProductRepo.validateProduct(deleteProduct.Name))
+                Console.Write("Enter name of Product: ");
+                string deleteProductName = Console.ReadLine().Trim();
+                if (ProductRepo.validateProductName(deleteProductName))
                 {
-                    ProductRepo.deleteProduct(ref headOfProduct, deleteProduct);
+                    ProductRepo.deleteProduct(ref headOfProduct, deleteProductName);
                     ProductRepo.updateFile(ref headOfProduct);
                 }
                 else
@@ -53,7 +59,7 @@ namespace DoAnTinHoc
                 }
             }
         }
-        public void UpdateCategory(ref Product headOfProduct)
+        public void UpdateProduct(ref Product headOfProduct)
         {
             if (headOfProduct == null)
             {
@@ -66,7 +72,7 @@ namespace DoAnTinHoc
                 string needUpdateProduct = Console.ReadLine().Trim().ToLower();
                 Console.WriteLine("Update content");
                 Product updatedProduct = productRepo.getNewProduct();
-                if (productRepo.validateProduct(needUpdateProduct))
+                if (productRepo.validateProductName(needUpdateProduct))
                 {
                     productRepo.updateProduct(ref headOfProduct, updatedProduct, needUpdateProduct);
                     productRepo.updateFile(ref headOfProduct);

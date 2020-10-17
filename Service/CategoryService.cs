@@ -42,11 +42,12 @@ namespace DoAnTinHoc
             }
             else
             {
-                Category deleteCategory = categoryRepo.getNewCategory();
+                Console.Write("Enter category name: ");
+                string deleteCategoryName = Console.ReadLine().Trim();
 
-                if (categoryRepo.validateCategory(deleteCategory.Name))
+                if (categoryRepo.validateCategory(deleteCategoryName))
                 {
-                    categoryRepo.deleteCategory(ref headOfCategory, deleteCategory);
+                    categoryRepo.deleteCategory(ref headOfCategory, deleteCategoryName);
                     categoryRepo.updateFile(ref headOfCategory);
                 }
                 else
@@ -67,11 +68,11 @@ namespace DoAnTinHoc
             else
             {
                 CategoryRepo categoryRepo = new CategoryRepo();
-                Console.WriteLine("The category want to update");
-                Category needUpdateCategory = categoryRepo.getNewCategory();
+                Console.Write("The category want to update: ");
+                string needUpdateCategory = Console.ReadLine().Trim();
                 Console.WriteLine("Update content");
                 Category updatedCategory = categoryRepo.getNewCategory();
-                if (categoryRepo.validateCategory(needUpdateCategory.Name))
+                if (categoryRepo.validateCategory(needUpdateCategory))
                 {
                     categoryRepo.updateCategory(ref headOfCategory, updatedCategory, needUpdateCategory);
                     categoryRepo.updateFile(ref headOfCategory);
