@@ -76,7 +76,6 @@ namespace DoAnTinHoc
                 }
             }
         }
-
         public void deleteProduct(ref Product headOfProduct, string deleteProductName)
         {
             if (headOfProduct == null)
@@ -129,24 +128,22 @@ namespace DoAnTinHoc
             string[] ProductList = File.ReadAllLines(filePath);
             foreach (var item in ProductList)
             {
-                if (item.Contains(productName))
+                string[] itemConetent = item.Split(',');
+                if (item[1].Equals(productName))
                 {
                     return result = true;
                 }
             }
             return result;
         }
-        public bool validateProductName(int Amount, double Price)
+        public bool validateProductAmountPrice(int Amount, double Price)
         {
             bool result = false;
-            string[] ProductListName = File.ReadAllLines(filePath);
-            foreach (var item in ProductListName)
+            if (Amount > 0 && Price > 0)
             {
-                if (Amount > 0 && Price > 0)
-                {
-                    return result = true;
-                }
+                return result = true;
             }
+
             return result;
         }
         public Product getNewProduct()
@@ -183,9 +180,9 @@ namespace DoAnTinHoc
             amount = Int32.Parse(Console.ReadLine());
             Console.Write("Enter your price: ");
             price = Convert.ToDouble(Console.ReadLine());
-                
+
             string[] lastProduct = File.ReadAllLines(filePath).Last().Split(',');
-            idProduct = Int32.Parse(lastProduct[0])+1;
+            idProduct = Int32.Parse(lastProduct[0]) + 1;
             return returnProduct = new Product
             {
                 IdProduct = idProduct,
@@ -225,7 +222,6 @@ namespace DoAnTinHoc
                 cloneOfHeadProduct = cloneOfHeadProduct.NextProduct;
             }
         }
-
         public void updateProduct(ref Product headOfProduct, Product updatedProduct, string needToUpdateProduct)
         {
             Product cloneOfHeadProduct = headOfProduct;
@@ -248,16 +244,26 @@ namespace DoAnTinHoc
                         cloneOfHeadProduct.Amount = updatedProduct.Amount;
                         cloneOfHeadProduct.Price = updatedProduct.Price;
                     }
-<<<<<<< HEAD
-                    else if (validateProductName(cloneOfHeadProduct.Amount, cloneOfHeadProduct.Price))
-=======
                     else
->>>>>>> 25b7c4747951d9b8863fea56f2389f4f3a46f950
                     {
                         cloneOfHeadProduct = cloneOfHeadProduct.NextProduct;
                     }
                 }
             }
+        }
+        public bool CheckNamePoduct(string productCheckName)
+        {
+            bool result = false;
+            string[] ProductList = File.ReadAllLines(filePath);
+            foreach (var item in ProductList)
+            {
+                string[] itemConetent = item.Split(',');
+                if (item[1].Equals(productCheckName))
+                {
+                    return true;
+                }
+            }
+            return result;
         }
     }
     #endregion
