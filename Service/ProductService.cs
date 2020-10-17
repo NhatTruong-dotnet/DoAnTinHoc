@@ -24,11 +24,16 @@ namespace DoAnTinHoc
             {
                 Console.WriteLine("Item already inserted");
             }
-            else
+            else if (ProductRepo.validateProductAmountPrice(newProduct.Amount, newProduct.Price))
             {
                 ProductRepo.insertProduct(ref headOfProduct, newProduct);
                 ProductRepo.updateFile(ref headOfProduct);
                 Console.WriteLine("Insert success");
+            }
+            else
+            {
+                Console.WriteLine("Vui long nhap so duong");
+                AddNewProduct(ref headOfProduct);
             }
         }
 
@@ -54,7 +59,10 @@ namespace DoAnTinHoc
                 }
             }
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4cdcb1ac3dbcc431ab4a6221d0ad57a786237520
         public void UpdateProduct(ref Product headOfProduct)
         {
             if (headOfProduct == null)

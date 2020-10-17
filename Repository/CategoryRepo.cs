@@ -11,7 +11,7 @@ namespace DoAnTinHoc
     public class CategoryRepo : ICategory
     {
 
-        const string filePath = @"C:\NhatTruong\Project\DoAnTinHoc\Data\CategoryData.txt";
+        const string filePath = @"C:\Users\Dell\Desktop\ConsoleApp1\ConsoleApp2\CategoryData.txt";
         #region Function
         // Thêm một mặt hàng mới vào danh sách
 
