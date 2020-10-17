@@ -123,7 +123,7 @@ namespace DoAnTinHoc
             }
         }
         #endregion
-        public bool validateProduct(string productName)
+        public bool validateProductName(string productName)
         {
             bool result = false;
             string[] ProductList = File.ReadAllLines(filePath);
@@ -248,7 +248,11 @@ namespace DoAnTinHoc
                         cloneOfHeadProduct.Amount = updatedProduct.Amount;
                         cloneOfHeadProduct.Price = updatedProduct.Price;
                     }
+<<<<<<< HEAD
                     else if (validateProductName(cloneOfHeadProduct.Amount, cloneOfHeadProduct.Price))
+=======
+                    else
+>>>>>>> 25b7c4747951d9b8863fea56f2389f4f3a46f950
                     {
                         cloneOfHeadProduct = cloneOfHeadProduct.NextProduct;
                     }
