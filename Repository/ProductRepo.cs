@@ -36,7 +36,7 @@ namespace DoAnTinHoc
             string[] ProductList = File.ReadAllLines(filepathFromHead);
             if (ProductList.Length == 0)
             {
-                Console.WriteLine("File empty");
+                Console.WriteLine("File Product empty");
             }
             else
             {

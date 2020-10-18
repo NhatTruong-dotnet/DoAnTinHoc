@@ -50,7 +50,8 @@ namespace DoAnTinHoc
                 {
                     IdCategory = Int32.Parse(headOfCategoryContent[0]),
                     Name = headOfCategoryContent[1].ToString().Trim(),
-                    HeadOfProduct = ProductService.LoadProductList(headOfCategoryContent[3].ToString().Trim())
+                    HeadOfProduct = ProductService.LoadProductList(headOfCategoryContent[3].ToString().Trim()),
+                    filePathProduct = headOfCategoryContent[3]
                 };
                 // nếu những thằng phía sau nó có tồn tại
                 if (categoryList.Length != 0)
@@ -195,19 +196,21 @@ namespace DoAnTinHoc
             string category =
                     cloneOfHeadCategory.IdCategory.ToString() + ',' 
                     + cloneOfHeadCategory.Name + ',' 
-                    + cloneOfHeadCategory.NextCategory.IdCategory.ToString();
-
+                    + cloneOfHeadCategory.NextCategory.IdCategory.ToString()+',' 
+                    + cloneOfHeadCategory.filePathProduct;
+                    
             using (StreamWriter datafile = File.AppendText(filePath))
             {
-                datafile.WriteLine(category);
+                datafile.WriteLine(category); 
             }
             cloneOfHeadCategory = cloneOfHeadCategory.NextCategory;
             while (cloneOfHeadCategory.IdCategory != headOfCategory.IdCategory)
             {
                 category =
                     cloneOfHeadCategory.IdCategory.ToString() + ',' 
-                    + cloneOfHeadCategory.Name + ',' 
-                    + cloneOfHeadCategory.NextCategory.IdCategory.ToString();
+                    + cloneOfHeadCategory.Name + ','
+                    + cloneOfHeadCategory.NextCategory.IdCategory.ToString() + ','
+                    + cloneOfHeadCategory.filePathProduct;
 
                 using (StreamWriter datafile = File.AppendText(filePath))
                 {
@@ -216,6 +219,7 @@ namespace DoAnTinHoc
                 cloneOfHeadCategory = cloneOfHeadCategory.NextCategory;
             }
         }
-    }
+
+}
     #endregion
 }

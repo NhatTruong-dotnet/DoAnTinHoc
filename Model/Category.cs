@@ -15,6 +15,7 @@ namespace DoAnTinHoc
         public Category NextCategory { get; set; }
         // con tro san pham dau
         public Product HeadOfProduct { get; set; }
+        public string filePathProduct { get; set; }
         #endregion
 
         #region Constructor
@@ -30,11 +31,12 @@ namespace DoAnTinHoc
             this.NextCategory = this;
             this.HeadOfProduct = null;
         }
-        public Category(int idCategory, string name) // tương tự ở trên nhưng với id và name được, này được tận dụng trong hàm insert
+        public Category(int idCategory, string name, string filePath) // tương tự ở trên nhưng với id và name được, này được tận dụng trong hàm insert
         {
             this.IdCategory = idCategory;
             this.Name = name;
             this.NextCategory = this;
+            this.filePathProduct = filePath;
             this.HeadOfProduct = null;
         }
         #endregion

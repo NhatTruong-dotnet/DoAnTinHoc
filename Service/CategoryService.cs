@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,13 +13,13 @@ namespace DoAnTinHoc
         {
             //dự phòng biến trả về 
             //init Repo của Category
-            CategoryRepo categoryRepo = new CategoryRepo(); 
+            CategoryRepo categoryRepo = new CategoryRepo();
             categoryRepo.loadCategoryList(ref headOfCategory);
         }
 
         public void AddNewCategory(ref Category headOfCategory)
         {
-            
+
             CategoryRepo categoryRepo = new CategoryRepo();
             Category newCategory = categoryRepo.getNewCategory();
             if (categoryRepo.validateCategory(newCategory.Name))
@@ -27,11 +28,22 @@ namespace DoAnTinHoc
             }
             else
             {
-                categoryRepo.insertCategory(ref headOfCategory, newCategory);
-                categoryRepo.updateFile(ref headOfCategory);
-                Console.WriteLine("Insert success");
+                string fileCung = @"C:\NhatTruong\Project\DoAnTinHoc\Data\Product1.txt";
+                if (File.Exists(fileCung))
+                {
+                    File.Create(fileCung);
+
+                    categoryRepo.insertCategory(ref headOfCategory, newCategory);
+                    categoryRepo.updateFile(ref headOfCategory);
+                    Console.WriteLine("Insert success");
+                }
+                else
+                {
+                    Console.WriteLine("File Existed !!!");
+                }
             }
         }
+
 
         public void DeleteCategory(ref Category headOfCategory)
         {
@@ -55,8 +67,8 @@ namespace DoAnTinHoc
                     Console.WriteLine("This category not in list");
                 }
             }
-           
-           
+
+
         }
 
         public void UpdateCategory(ref Category headOfCategory)
@@ -102,8 +114,54 @@ namespace DoAnTinHoc
                     headOfCategory = headOfCategory.NextCategory;
                 }
             }
-            
+
         }
 
+
+        public void MenuList(Category headOfCategory)
+        {
+            string[] space = new string[30];
+            string[] spaceFunction = new string[10];
+            int inputFromUser = 0;
+            #region UI
+            Console.Write(String.Join(" ", space));
+            Console.WriteLine("Manage Category and Product");
+            Console.WriteLine(String.Join(" ", spaceFunction));
+            Console.WriteLine("1. Show Category List");
+            Console.WriteLine(String.Join(" ", spaceFunction));
+            Console.WriteLine("2. Add New Category");
+            Console.WriteLine(String.Join(" ", spaceFunction));
+            Console.WriteLine("3. Update Category");
+            Console.WriteLine(String.Join(" ", spaceFunction));
+            Console.WriteLine("4. Delete Category");
+            Console.WriteLine(String.Join(" ", spaceFunction));
+            Console.Write("*Your Choose: ");
+            #endregion
+
+            if (Int32.TryParse(Console.ReadLine(), out inputFromUser))
+            {
+                switch (inputFromUser)
+                {
+                    case 1:
+                        ShowCategoryList(headOfCategory);
+                        break;
+                    case 2:
+                        AddNewCategory(ref headOfCategory);
+                        break;
+                    case 3:
+                        UpdateCategory(ref headOfCategory);
+                        break;
+                    case 4:
+                        DeleteCategory(ref headOfCategory);
+                        break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Failed");
+                Console.WriteLine(inputFromUser);
+            }
+            Console.Read();
+        }
     }
 }
