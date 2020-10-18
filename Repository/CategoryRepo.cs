@@ -130,6 +130,7 @@ namespace DoAnTinHoc
             if (cloneOfHeadCategory.Name.Equals(needUpdatedCategory))
             {
                 cloneOfHeadCategory.Name = updateCategory.Name;
+                cloneOfHeadCategory.filePathProduct = updateCategory.filePathProduct;
             }
             else
             {
@@ -140,6 +141,7 @@ namespace DoAnTinHoc
                     if (cloneOfHeadCategory.Name.Equals(needUpdatedCategory))
                     {
                         cloneOfHeadCategory.Name = updateCategory.Name;
+                        cloneOfHeadCategory.filePathProduct = updateCategory.filePathProduct;
                     }
                     else
                     {
@@ -220,6 +222,12 @@ namespace DoAnTinHoc
             }
         }
 
-}
+        public string generateFilePathOfCategoryProduct(string categoryName,ref Category category)
+        {
+            string filePath = @"C:\NhatTruong\Project\DoAnTinHoc\Data\" + categoryName + ".txt";
+            category.filePathProduct = filePath;
+            return filePath;
+        }
+    }
     #endregion
 }

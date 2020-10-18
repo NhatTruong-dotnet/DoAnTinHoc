@@ -17,7 +17,7 @@ namespace DoAnTinHoc
             Category headOfCategory = new Category();
             CategoryService categoryService = new CategoryService();
             categoryService.LoadCategoryList(ref headOfCategory);
-            categoryService.AddNewCategory(ref headOfCategory);
+            categoryService.UpdateCategory(ref headOfCategory);
 
             Console.Read();
         }

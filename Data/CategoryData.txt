@@ -1,1 +1,1 @@
-1,Phone,2,C:\NhatTruong\Project\DoAnTinHoc\Data\Product1.txt
+1,thuanbuscu,1,C:\NhatTruong\Project\DoAnTinHoc\Data\thuanbuscu.txt

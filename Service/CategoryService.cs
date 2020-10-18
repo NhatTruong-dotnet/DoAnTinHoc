@@ -28,22 +28,13 @@ namespace DoAnTinHoc
             }
             else
             {
-                string fileCung = @"C:\NhatTruong\Project\DoAnTinHoc\Data\Product1.txt";
-                if (File.Exists(fileCung))
-                {
-                    File.Create(fileCung);
-
-                    categoryRepo.insertCategory(ref headOfCategory, newCategory);
-                    categoryRepo.updateFile(ref headOfCategory);
-                    Console.WriteLine("Insert success");
-                }
-                else
-                {
-                    Console.WriteLine("File Existed !!!");
-                }
+                categoryRepo.generateFilePathOfCategoryProduct(newCategory.Name, ref newCategory);
+                categoryRepo.insertCategory(ref headOfCategory, newCategory);
+                File.Create(newCategory.filePathProduct);
+                categoryRepo.updateFile(ref headOfCategory);
+                Console.WriteLine("Insert success");
             }
         }
-
 
         public void DeleteCategory(ref Category headOfCategory)
         {
@@ -86,7 +77,10 @@ namespace DoAnTinHoc
                 Category updatedCategory = categoryRepo.getNewCategory();
                 if (categoryRepo.validateCategory(needUpdateCategory))
                 {
+                    string fileNeedToRename = categoryRepo.generateFilePathOfCategoryProduct(needUpdateCategory, ref updatedCategory);
+                    categoryRepo.generateFilePathOfCategoryProduct(updatedCategory.Name, ref updatedCategory);
                     categoryRepo.updateCategory(ref headOfCategory, updatedCategory, needUpdateCategory);
+                    File.Move(fileNeedToRename, updatedCategory.filePathProduct);
                     categoryRepo.updateFile(ref headOfCategory);
                 }
                 else
@@ -116,7 +110,6 @@ namespace DoAnTinHoc
             }
 
         }
-
 
         public void MenuList(Category headOfCategory)
         {

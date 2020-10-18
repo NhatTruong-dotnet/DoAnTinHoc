@@ -21,6 +21,9 @@ namespace DoAnTinHoc
         #endregion
 
         bool validateCategory(string newCategoryName);
+
         Category getNewCategory();
+
+        string generateFilePathOfCategoryProduct(string categoryName, ref Category category);
     }
 }
