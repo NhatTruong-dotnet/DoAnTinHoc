@@ -1,5 +1,1 @@
-1,Phone,2
-2,Bike,4
-4,phon3,5
-5,rocet,6
-6,ket,1
+1,Phone,2,C:\NhatTruong\Project\DoAnTinHoc\Data\Product1.txt

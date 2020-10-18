@@ -9,12 +9,12 @@ namespace DoAnTinHoc
 {
     public class ProductService
     {
-        public void LoadProductList(ref Product headOfProduct)
+        public Product LoadProductList(string filepath)
         {
             //dự phòng biến trả về 
             //init Repo của Product
             ProductRepo ProductRepo = new ProductRepo();
-            ProductRepo.loadProductList(ref headOfProduct);
+            return ProductRepo.loadProductList(filepath);
         }
 
         public void AddNewProduct(ref Product headOfProduct)
@@ -69,9 +69,9 @@ namespace DoAnTinHoc
             else
             {
                 ProductRepo productRepo = new ProductRepo();
-                Console.WriteLine("The Product want to update");
+                Console.Write("The Product want to update: ");
                 string needUpdateProduct = Console.ReadLine().Trim().ToLower();
-                Console.WriteLine("Update content");
+                Console.WriteLine("Update Product content: ");
                 Product updatedProduct = productRepo.getNewProduct();
                 if (productRepo.validateProductName(needUpdateProduct))
                 {
@@ -80,26 +80,11 @@ namespace DoAnTinHoc
                 }
                 else
                 {
-                    Console.WriteLine("This category not in list");
+                    Console.WriteLine("This Product not in list");
                 }
             }
         }
-        public void ShowProduct()
-        {
-            ProductRepo ProductRepo = new ProductRepo();
-            Product newProduct = ProductRepo.getNewProduct();
-            if (!ProductRepo.validateProductName(newProduct.Name))
-            {
-                Product productchecked = new Product();
-                Console.Write("ID: " + productchecked.IdProduct + " ");
-                Console.Write("Name: " + productchecked.Name + " ");
-                Console.Write("Amount: " + productchecked.Amount + " ");
-                Console.Write("Price: " + productchecked.Price + " ");
-            }
-            else
-            {
-                Console.WriteLine("Not found!!!!");
-            }
-        }
+
+        
     }
 }

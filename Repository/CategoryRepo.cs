@@ -10,8 +10,9 @@ namespace DoAnTinHoc
 {
     public class CategoryRepo : ICategory
     {
+        ProductService ProductService = new ProductService();
 
-        const string filePath = @"C:\Users\Dell\Desktop\ConsoleApp1\ConsoleApp2\CategoryData.txt";
+        const string filePath = @"C:\NhatTruong\Project\DoAnTinHoc\Data\CategoryData.txt";
         #region Function
         // Thêm một mặt hàng mới vào danh sách
 
@@ -48,7 +49,8 @@ namespace DoAnTinHoc
                 headOfCategory = new Category
                 {
                     IdCategory = Int32.Parse(headOfCategoryContent[0]),
-                    Name = headOfCategoryContent[1].ToString().Trim()
+                    Name = headOfCategoryContent[1].ToString().Trim(),
+                    HeadOfProduct = ProductService.LoadProductList(headOfCategoryContent[3].ToString().Trim())
                 };
                 // nếu những thằng phía sau nó có tồn tại
                 if (categoryList.Length != 0)
@@ -153,7 +155,8 @@ namespace DoAnTinHoc
             string[] categoryList = File.ReadAllLines(filePath);
             foreach (var item in categoryList)
             {
-                if (item.Contains(newCategoryName))
+                string[] itemContent = item.Split(',');
+                if (itemContent[1].Equals(newCategoryName))
                 {
                     return result = true;
                 }

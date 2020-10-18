@@ -21,7 +21,7 @@ namespace DoAnTinHoc
         public Category() // hàm khởi tạo constructor mặc định thì nó sẽ là một cục riêng biệt không tham chiếu đến cục khác cũng chưa có danh sách sản phẩm của nó
         {
             NextCategory = this;
-            HeadOfProduct = null;
+            HeadOfProduct = new Product();
         }
 
         public Category(int idCategory) // tương tự ở trên nhưng với id cho trước 

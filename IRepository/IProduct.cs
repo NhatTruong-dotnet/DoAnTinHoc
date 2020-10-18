@@ -11,7 +11,7 @@ namespace DoAnTinHoc
     {
         #region UI
         void insertProduct(ref Product headOfProduct, Product newProduct);
-        void loadProductList(ref Product headOfProduct);
+        Product loadProductList(string filepathFromHead);
         void deleteProduct(ref Product headOfProduct, string deleteProductName);
         void updateProduct(ref Product headOfProduct, Product updatedProduct, string needToUpdateProduct);
         #endregion
@@ -20,8 +20,16 @@ namespace DoAnTinHoc
         void updateFile(ref Product headOfProduct);
         #endregion
 
+        #region Validate
         bool validateProductName(string IdProductName);
-        bool validateProductAmountPrice(int Amount, double Price);
+
+        bool validateProduct(int Amount, double Price);
+        #endregion
+
+        #region Search
+        
+        #endregion
         Product getNewProduct();
+
     }
 }

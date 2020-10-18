@@ -29,10 +29,11 @@ namespace DoAnTinHoc
             cloneOfHeadProduct.NextProduct.NextProduct = headOfProduct;
         }
 
-        public void loadProductList(ref Product headOfProduct)
+        public Product loadProductList(string filepathFromHead)
         {
+            Product headOfProduct = new Product();
             // lấy dữ liệu các mặt hàng có sẵn trong danh sách
-            string[] ProductList = File.ReadAllLines(filePath);
+            string[] ProductList = File.ReadAllLines(filepathFromHead);
             if (ProductList.Length == 0)
             {
                 Console.WriteLine("File empty");
@@ -75,7 +76,9 @@ namespace DoAnTinHoc
                     }
                 }
             }
+            return headOfProduct;
         }
+
         public void deleteProduct(ref Product headOfProduct, string deleteProductName)
         {
             if (headOfProduct == null)
@@ -122,30 +125,22 @@ namespace DoAnTinHoc
             }
         }
         #endregion
+
         public bool validateProductName(string productName)
         {
             bool result = false;
             string[] ProductList = File.ReadAllLines(filePath);
             foreach (var item in ProductList)
             {
-                string[] itemConetent = item.Split(',');
-                if (item[1].Equals(productName))
+                string[] itemContent = item.Split(',');
+                if (itemContent[1].Equals(productName))
                 {
                     return result = true;
                 }
             }
             return result;
         }
-<<<<<<< HEAD
-        public bool validateProductAmountPrice(int Amount, double Price)
-        {
-            bool result = false;
-            if (Amount > 0 && Price > 0)
-            {
-                return result = true;
-            }
 
-=======
         public bool validateProduct(int Amount, double Price)
         {
             bool result = false;
@@ -153,9 +148,9 @@ namespace DoAnTinHoc
                 {
                     return result = true;
                 }
->>>>>>> 2adf36ebb52976d404c8b896225e55fd9389913c
             return result;
         }
+
         public Product getNewProduct()
         {
             // đọc file dữ liệu
@@ -232,6 +227,7 @@ namespace DoAnTinHoc
                 cloneOfHeadProduct = cloneOfHeadProduct.NextProduct;
             }
         }
+
         public void updateProduct(ref Product headOfProduct, Product updatedProduct, string needToUpdateProduct)
         {
             Product cloneOfHeadProduct = headOfProduct;
@@ -254,31 +250,15 @@ namespace DoAnTinHoc
                         cloneOfHeadProduct.Amount = updatedProduct.Amount;
                         cloneOfHeadProduct.Price = updatedProduct.Price;
                     }
-<<<<<<< HEAD
-                    else
-=======
                     else if (validateProduct(cloneOfHeadProduct.Amount, cloneOfHeadProduct.Price))
->>>>>>> 2adf36ebb52976d404c8b896225e55fd9389913c
                     {
                         cloneOfHeadProduct = cloneOfHeadProduct.NextProduct;
                     }
                 }
             }
         }
-        public bool CheckNamePoduct(string productCheckName)
-        {
-            bool result = false;
-            string[] ProductList = File.ReadAllLines(filePath);
-            foreach (var item in ProductList)
-            {
-                string[] itemConetent = item.Split(',');
-                if (item[1].Equals(productCheckName))
-                {
-                    return true;
-                }
-            }
-            return result;
-        }
+
+       
     }
     #endregion
 }
