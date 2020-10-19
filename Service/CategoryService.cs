@@ -119,15 +119,17 @@ namespace DoAnTinHoc
             #region UI
             Console.Write(String.Join(" ", space));
             Console.WriteLine("Manage Category and Product");
-            Console.WriteLine(String.Join(" ", spaceFunction));
+            Console.Write(String.Join(" ", spaceFunction));
             Console.WriteLine("1. Show Category List");
-            Console.WriteLine(String.Join(" ", spaceFunction));
+            Console.Write(String.Join(" ", spaceFunction));
             Console.WriteLine("2. Add New Category");
-            Console.WriteLine(String.Join(" ", spaceFunction));
+            Console.Write(String.Join(" ", spaceFunction));
             Console.WriteLine("3. Update Category");
-            Console.WriteLine(String.Join(" ", spaceFunction));
+            Console.Write(String.Join(" ", spaceFunction));
             Console.WriteLine("4. Delete Category");
-            Console.WriteLine(String.Join(" ", spaceFunction));
+            Console.Write(String.Join(" ", spaceFunction));
+            Console.WriteLine("5. Get Category");
+            Console.Write(String.Join(" ", spaceFunction));
             Console.Write("*Your Choose: ");
             #endregion
 
@@ -147,6 +149,11 @@ namespace DoAnTinHoc
                     case 4:
                         DeleteCategory(ref headOfCategory);
                         break;
+                    case 5:
+                        Console.Write("Enter Name or ID of category: ");
+                        string input = Console.ReadLine();
+                        GetCategory(input.Trim().ToLower());
+                        break;
                 }
             }
             else
@@ -154,7 +161,20 @@ namespace DoAnTinHoc
                 Console.WriteLine("Failed");
                 Console.WriteLine(inputFromUser);
             }
-            Console.Read();
+        }
+
+        public void GetCategory(string inputFromUser)
+        {
+            CategoryRepo categoryRepo = new CategoryRepo();
+            int categoryID = 0;
+            if (Int32.TryParse(inputFromUser, out categoryID))
+            {
+                categoryRepo.GetCategoryByID(categoryID);
+            }
+            else
+            {
+                categoryRepo.GetCategoryByName(inputFromUser);
+            }
         }
     }
 }

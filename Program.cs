@@ -14,11 +14,10 @@ namespace DoAnTinHoc
     {
         public static void Main()
         {
-            Category headOfCategory = new Category();
             CategoryService categoryService = new CategoryService();
+            Category headOfCategory = new Category();
             categoryService.LoadCategoryList(ref headOfCategory);
-            categoryService.UpdateCategory(ref headOfCategory);
-
+            categoryService.AddNewCategory(ref headOfCategory);
             Console.Read();
         }
     }

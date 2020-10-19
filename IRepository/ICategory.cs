@@ -25,5 +25,10 @@ namespace DoAnTinHoc
         Category getNewCategory();
 
         string generateFilePathOfCategoryProduct(string categoryName, ref Category category);
+
+        void GetCategoryByName(string categoryName);
+
+        void GetCategoryByID(int categoryID);
+
     }
 }

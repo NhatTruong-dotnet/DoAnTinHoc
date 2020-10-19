@@ -167,6 +167,30 @@ namespace DoAnTinHoc
             return result;
         }
 
+        internal bool validateCategoryID(int categoryID)
+        {
+            bool result = false;
+            try
+            {
+                File.ReadAllLines(filePath);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("This category list is empty now");
+                return result;
+            }
+                
+            string[] categoryList = File.ReadAllLines(filePath);
+            foreach (var item in categoryList)
+            {
+                string[] itemContent = item.Split(',');
+                if (itemContent[0].Equals(categoryID.ToString()))
+                {
+                    return result = true;
+                }
+            }
+            return result;
+        }
         public Category getNewCategory()
         {
             // đọc file dữ liệu
@@ -227,6 +251,42 @@ namespace DoAnTinHoc
             string filePath = @"C:\NhatTruong\Project\DoAnTinHoc\Data\" + categoryName + ".txt";
             category.filePathProduct = filePath;
             return filePath;
+        }
+
+        public void GetCategoryByName(string categoryName)
+        {
+            
+            if (validateCategory(categoryName))
+            {
+                string[] categoryList = File.ReadAllLines(filePath);
+                foreach (var item in categoryList)
+                {
+                    string[] itemContent = item.Split(',');
+                    if (itemContent[1].Equals(categoryName.ToString()))
+                    {
+                        Console.WriteLine("ID: "+ itemContent[0]);
+                        Console.WriteLine("Name: " + itemContent[1]);
+                    }
+                }
+            }
+        }
+
+        public void GetCategoryByID(int categoryID)
+        {
+
+            if (validateCategoryID(categoryID))
+            {
+                string[] categoryList = File.ReadAllLines(filePath);
+                foreach (var item in categoryList)
+                {
+                    string[] itemContent = item.Split(',');
+                    if (itemContent[0].Equals(categoryID.ToString()))
+                    {
+                        Console.WriteLine("ID: " + itemContent[0]);
+                        Console.WriteLine("Name: " + itemContent[1]);
+                    }
+                }
+            }
         }
     }
     #endregion
