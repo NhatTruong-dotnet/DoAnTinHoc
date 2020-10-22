@@ -28,7 +28,7 @@ namespace DoAnTinHoc
 
         #region Search
         Product GetProductByID(int productId);
-        Product[] GetProductByName(string productName);
+        LinkedList<Product> GetProductByName(ref Category headOfCategory, string productName);
         #endregion
         Product getNewProduct();
 

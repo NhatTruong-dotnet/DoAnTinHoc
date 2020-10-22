@@ -260,16 +260,34 @@ namespace DoAnTinHoc
 
         public Product GetProductByID(int productId)
         {
-            
+            Product returnedProduct = new Product();
+            return returnedProduct;
         }
 
-        public Product GetProductByName(string productName)
+        public LinkedList<Product> GetProductByName(ref Category headOfCategory, string productName)
         {
-            Product returnedProduct = new Product();
-            if (validateProductName(productName))
+            LinkedList<Product> returnProductList = new LinkedList<Product>();
+
+            Category cloneOfHeadCategory = headOfCategory;
+
+            Product productList = new Product();
+            productList = loadProductList(cloneOfHeadCategory.filePathProduct);
+            int theFlatOfProduct = productList.IdProduct;
+            do
             {
-                string[] productList = File
-            }
+                productList = loadProductList(cloneOfHeadCategory.filePathProduct);
+                    do
+                    {
+                        if (productName.Equals(productList.Name))
+                        {
+                            returnProductList.AddLast(productList);
+                        }
+                        productList = productList.NextProduct;
+                    } while (productList.IdProduct != theFlatOfProduct);
+                cloneOfHeadCategory = cloneOfHeadCategory.NextCategory;
+            } while (cloneOfHeadCategory.NextCategory != headOfCategory);
+           
+            return returnProductList;
         }
     }
     #endregion

@@ -85,20 +85,25 @@ namespace DoAnTinHoc
             }
         }
 
-        public Product GetCategory(string inputFromUser)
+        public void GetCategory(ref Category headOfCategory,string inputFromUser)
         {
-            ProductRepo productRepo = new ProductRepo();
-            Product returned = new Product();
-            int productID = 0;
-            if (Int32.TryParse(inputFromUser, out productID))
+            if (headOfCategory != null)
             {
-                returned = productRepo.GetProductByID(productID);
+                ProductRepo productRepo = new ProductRepo();
+                int productID = 0;
+                if (Int32.TryParse(inputFromUser, out productID))
+                {
+                     productRepo.GetProductByID(productID);
+                }
+                else
+                {
+                    productRepo.GetProductByName(ref headOfCategory, inputFromUser);
+                }
             }
             else
             {
-                returned = productRepo.GetProductByName(inputFromUser);
+                Console.WriteLine("The List is empty");
             }
-            return returned;
         }
 
     }

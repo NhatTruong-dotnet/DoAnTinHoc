@@ -14,10 +14,18 @@ namespace DoAnTinHoc
     {
         public static void Main()
         {
-            CategoryService categoryService = new CategoryService();
             Category headOfCategory = new Category();
+            CategoryService categoryService = new CategoryService();
             categoryService.LoadCategoryList(ref headOfCategory);
-            categoryService.DeleteCategory(ref headOfCategory);
+            ProductRepo productRepo = new ProductRepo();
+            LinkedList<Product> productList = productRepo.GetProductByName(ref headOfCategory, "bikeee");
+            foreach (var item in productList)
+            {
+                Console.WriteLine(item.IdProduct);
+                Console.WriteLine(item.Name);
+                Console.WriteLine(item.Amount);
+                Console.WriteLine(item.Price);
+            }
             Console.Read();
         }
     }
