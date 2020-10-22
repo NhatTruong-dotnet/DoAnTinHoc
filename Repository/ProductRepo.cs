@@ -278,16 +278,26 @@ namespace DoAnTinHoc
                 productList = loadProductList(cloneOfHeadCategory.filePathProduct);
                     do
                     {
-                        if (productName.Equals(productList.Name))
+                        if (productList.Name.Contains(productName))
                         {
                             returnProductList.AddLast(productList);
                         }
                         productList = productList.NextProduct;
                     } while (productList.IdProduct != theFlatOfProduct);
+
                 cloneOfHeadCategory = cloneOfHeadCategory.NextCategory;
             } while (cloneOfHeadCategory.NextCategory != headOfCategory);
            
             return returnProductList;
+        }
+
+        public void ShowProduct(Product product)
+        {
+            Console.WriteLine("ID: {0}", product.IdProduct);
+            Console.WriteLine("Name: {0}", product.Name);
+            Console.WriteLine("Amout: {0}", product.Amount);
+            Console.WriteLine("Price: {0}", product.Price);
+            Console.WriteLine();
         }
     }
     #endregion

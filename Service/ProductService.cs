@@ -85,7 +85,7 @@ namespace DoAnTinHoc
             }
         }
 
-        public void GetCategory(ref Category headOfCategory,string inputFromUser)
+        public void GetProduct(ref Category headOfCategory,string inputFromUser)
         {
             if (headOfCategory != null)
             {
@@ -97,7 +97,18 @@ namespace DoAnTinHoc
                 }
                 else
                 {
-                    productRepo.GetProductByName(ref headOfCategory, inputFromUser);
+                    LinkedList<Product> productList = productRepo.GetProductByName(ref headOfCategory, inputFromUser);
+                    if (productList.Count == 0)
+                    {
+                        Console.WriteLine("This Product not in the list");
+                    }
+                    else
+                    {
+                        foreach (var item in productList)
+                        {
+                            productRepo.ShowProduct(item);
+                        }
+                    }
                 }
             }
             else

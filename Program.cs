@@ -17,15 +17,9 @@ namespace DoAnTinHoc
             Category headOfCategory = new Category();
             CategoryService categoryService = new CategoryService();
             categoryService.LoadCategoryList(ref headOfCategory);
-            ProductRepo productRepo = new ProductRepo();
-            LinkedList<Product> productList = productRepo.GetProductByName(ref headOfCategory, "bikeee");
-            foreach (var item in productList)
-            {
-                Console.WriteLine(item.IdProduct);
-                Console.WriteLine(item.Name);
-                Console.WriteLine(item.Amount);
-                Console.WriteLine(item.Price);
-            }
+            ProductService productService = new ProductService();
+            productService.GetProduct(ref headOfCategory, "xxxxxx");
+            
             Console.Read();
         }
     }
