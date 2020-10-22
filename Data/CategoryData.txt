@@ -1,2 +1,1 @@
 1,phone,2,C:\NhatTruong\Project\DoAnTinHoc\Data\phone.txt
-2,hgffd,1,C:\NhatTruong\Project\DoAnTinHoc\Data\hgffd.txt

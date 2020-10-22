@@ -84,5 +84,22 @@ namespace DoAnTinHoc
                 }
             }
         }
+
+        public Product GetCategory(string inputFromUser)
+        {
+            ProductRepo productRepo = new ProductRepo();
+            Product returned = new Product();
+            int productID = 0;
+            if (Int32.TryParse(inputFromUser, out productID))
+            {
+                returned = productRepo.GetProductByID(productID);
+            }
+            else
+            {
+                returned = productRepo.GetProductByName(inputFromUser);
+            }
+            return returned;
+        }
+
     }
 }

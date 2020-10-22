@@ -10,6 +10,7 @@ namespace DoAnTinHoc
     {
         #region Properties
         public int IdCategory { get; set; }
+
         public string Name { get; set; }
         // ma hang tiep theo
         public Category NextCategory { get; set; }

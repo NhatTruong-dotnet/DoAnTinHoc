@@ -26,9 +26,9 @@ namespace DoAnTinHoc
 
         string generateFilePathOfCategoryProduct(string categoryName, ref Category category);
 
-        void GetCategoryByName(string categoryName);
+        Category GetCategoryByName(string categoryName);
 
-        void GetCategoryByID(int categoryID);
+        Category GetCategoryByID(int categoryID);
 
     }
 }

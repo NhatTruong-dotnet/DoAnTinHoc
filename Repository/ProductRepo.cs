@@ -258,7 +258,19 @@ namespace DoAnTinHoc
             }
         }
 
-       
+        public Product GetProductByID(int productId)
+        {
+            
+        }
+
+        public Product GetProductByName(string productName)
+        {
+            Product returnedProduct = new Product();
+            if (validateProductName(productName))
+            {
+                string[] productList = File
+            }
+        }
     }
     #endregion
 }

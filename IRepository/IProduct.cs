@@ -27,7 +27,8 @@ namespace DoAnTinHoc
         #endregion
 
         #region Search
-        
+        Product GetProductByID(int productId);
+        Product[] GetProductByName(string productName);
         #endregion
         Product getNewProduct();
 

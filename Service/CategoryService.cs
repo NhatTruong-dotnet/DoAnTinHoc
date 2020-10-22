@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -51,6 +52,7 @@ namespace DoAnTinHoc
                 if (categoryRepo.validateCategory(deleteCategoryName))
                 {
                     categoryRepo.deleteCategory(ref headOfCategory, deleteCategoryName);
+                    File.Delete(GetCategory(deleteCategoryName).filePathProduct);
                     categoryRepo.updateFile(ref headOfCategory);
                 }
                 else
@@ -58,8 +60,6 @@ namespace DoAnTinHoc
                     Console.WriteLine("This category not in list");
                 }
             }
-
-
         }
 
         public void UpdateCategory(ref Category headOfCategory)
@@ -163,18 +163,20 @@ namespace DoAnTinHoc
             }
         }
 
-        public void GetCategory(string inputFromUser)
+        public Category GetCategory(string inputFromUser)
         {
             CategoryRepo categoryRepo = new CategoryRepo();
+            Category returned = new Category();
             int categoryID = 0;
             if (Int32.TryParse(inputFromUser, out categoryID))
             {
-                categoryRepo.GetCategoryByID(categoryID);
+                returned = categoryRepo.GetCategoryByID(categoryID);
             }
             else
             {
-                categoryRepo.GetCategoryByName(inputFromUser);
+                returned = categoryRepo.GetCategoryByName(inputFromUser);
             }
+            return returned;
         }
     }
 }

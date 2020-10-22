@@ -191,6 +191,7 @@ namespace DoAnTinHoc
             }
             return result;
         }
+
         public Category getNewCategory()
         {
             // đọc file dữ liệu
@@ -253,9 +254,9 @@ namespace DoAnTinHoc
             return filePath;
         }
 
-        public void GetCategoryByName(string categoryName)
+        public Category GetCategoryByName(string categoryName)
         {
-            
+            Category returnCategory = new Category();
             if (validateCategory(categoryName))
             {
                 string[] categoryList = File.ReadAllLines(filePath);
@@ -264,29 +265,44 @@ namespace DoAnTinHoc
                     string[] itemContent = item.Split(',');
                     if (itemContent[1].Equals(categoryName.ToString()))
                     {
+                        returnCategory = new Category
+                        {
+                            IdCategory = Int32.Parse(itemContent[0]),
+                            Name = itemContent[1],
+                            filePathProduct = itemContent[3]
+                        };
                         Console.WriteLine("ID: "+ itemContent[0]);
                         Console.WriteLine("Name: " + itemContent[1]);
                     }
                 }
             }
+            return returnCategory;
         }
 
-        public void GetCategoryByID(int categoryID)
+        public Category GetCategoryByID(int categoryID)
         {
 
+            Category returnCategory = new Category();
             if (validateCategoryID(categoryID))
             {
                 string[] categoryList = File.ReadAllLines(filePath);
                 foreach (var item in categoryList)
                 {
                     string[] itemContent = item.Split(',');
-                    if (itemContent[0].Equals(categoryID.ToString()))
+                    if (itemContent[0].Equals(categoryID))
                     {
+                        returnCategory = new Category
+                        {
+                            IdCategory = Int32.Parse(itemContent[0]),
+                            Name = itemContent[1],
+                            filePathProduct = itemContent[3]
+                        };
                         Console.WriteLine("ID: " + itemContent[0]);
                         Console.WriteLine("Name: " + itemContent[1]);
                     }
                 }
             }
+            return returnCategory;
         }
     }
     #endregion
