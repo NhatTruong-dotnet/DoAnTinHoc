@@ -1,0 +1,1 @@
+1,phone,2,C:\Users\Dell\Desktop\ConsoleApp1\ConsoleApp3\Data\phone.txt
