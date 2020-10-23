@@ -17,11 +17,11 @@ namespace DoAnTinHoc
         #endregion
 
         #region File
-        void updateFile(ref Product headOfProduct);
+        void updateFile(ref Product headOfProduct, string filePathProduct);
         #endregion
 
         #region Validate
-        bool validateProductName(string IdProductName);
+        bool validateProductName(string IdProductName, string filePathProduct);
 
         bool validateProduct(int Amount, double Price);
         #endregion
@@ -29,8 +29,9 @@ namespace DoAnTinHoc
         #region Search
         Product GetProductByID(int productId);
         LinkedList<Product> GetProductByName(ref Category headOfCategory, string productName);
+
         #endregion
-        Product getNewProduct();
+        Product getNewProduct(string filePathProduct);
 
     }
 }

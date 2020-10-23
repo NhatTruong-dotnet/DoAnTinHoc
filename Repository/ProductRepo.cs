@@ -113,7 +113,6 @@ namespace DoAnTinHoc
                             if (cloneOfProduct.Name == deleteProductName)
                             {
                                 pointerInLoop.NextProduct = cloneOfProduct.NextProduct;
-                                Console.WriteLine("Deleted");
                                 break;
                             }
                             cloneOfProduct = cloneOfProduct.NextProduct;
@@ -126,10 +125,10 @@ namespace DoAnTinHoc
         }
         #endregion
 
-        public bool validateProductName(string productName)
+        public bool validateProductName(string productName, string filePathProduct)
         {
             bool result = false;
-            string[] ProductList = File.ReadAllLines(filePath);
+            string[] ProductList = File.ReadAllLines(filePathProduct);
             foreach (var item in ProductList)
             {
                 string[] itemContent = item.Split(',');
@@ -151,7 +150,7 @@ namespace DoAnTinHoc
             return result;
         }
 
-        public Product getNewProduct()
+        public Product getNewProduct(string filePathProduct)
         {
             // đọc file dữ liệu
             string nameProduct = "";
@@ -161,7 +160,7 @@ namespace DoAnTinHoc
             Product returnProduct = new Product();
             try
             {
-                File.ReadAllLines(filePath).Last().Split(',');
+                File.ReadAllLines(filePathProduct).Last().Split(',');
             }
             catch (Exception)
             {
@@ -186,7 +185,7 @@ namespace DoAnTinHoc
             Console.Write("Enter your price: ");
             price = Convert.ToDouble(Console.ReadLine());
 
-            string[] lastProduct = File.ReadAllLines(filePath).Last().Split(',');
+            string[] lastProduct = File.ReadAllLines(filePathProduct).Last().Split(',');
             idProduct = Int32.Parse(lastProduct[0]) + 1;
             return returnProduct = new Product
             {
@@ -197,17 +196,17 @@ namespace DoAnTinHoc
             };
         }
 
-        public void updateFile(ref Product headOfProduct)
+        public void updateFile(ref Product headOfProduct, string filePathProduct)
         {
             Product cloneOfHeadProduct = headOfProduct;
-            File.WriteAllText(filePath, String.Empty);
+            File.WriteAllText(filePathProduct, String.Empty);
             string Product =
                     cloneOfHeadProduct.IdProduct.ToString() + ','
                     + cloneOfHeadProduct.Name + ','
                     + cloneOfHeadProduct.Amount.ToString() + ','
                     + cloneOfHeadProduct.Price.ToString() + ','
                     + cloneOfHeadProduct.NextProduct.IdProduct.ToString();
-            using (StreamWriter datafile = File.AppendText(filePath))
+            using (StreamWriter datafile = File.AppendText(filePathProduct))
             {
                 datafile.WriteLine(Product);
             }
@@ -220,7 +219,7 @@ namespace DoAnTinHoc
                     + cloneOfHeadProduct.Amount.ToString() + ','
                     + cloneOfHeadProduct.Price.ToString() + ','
                     + cloneOfHeadProduct.NextProduct.IdProduct.ToString();
-                using (StreamWriter datafile = File.AppendText(filePath))
+                using (StreamWriter datafile = File.AppendText(filePathProduct))
                 {
                     datafile.WriteLine(Product);
                 }
@@ -288,6 +287,33 @@ namespace DoAnTinHoc
                 cloneOfHeadCategory = cloneOfHeadCategory.NextCategory;
             } while (cloneOfHeadCategory.NextCategory != headOfCategory);
            
+            return returnProductList;
+        }
+
+        public LinkedList<Product> GetProductID(ref Category headOfCategory, int IDProduct)
+        {
+            LinkedList<Product> returnProductList = new LinkedList<Product>();
+
+            Category cloneOfHeadCategory = headOfCategory;
+
+            Product productList = new Product();
+            productList = loadProductList(cloneOfHeadCategory.filePathProduct);
+            int theFlatOfProduct = productList.IdProduct;
+            do
+            {
+                productList = loadProductList(cloneOfHeadCategory.filePathProduct);
+                do
+                {
+                    if (productList.IdProduct.Equals(IDProduct))
+                    {
+                        returnProductList.AddLast(productList);
+                    }
+                    productList = productList.NextProduct;
+                } while (productList.IdProduct != theFlatOfProduct);
+
+                cloneOfHeadCategory = cloneOfHeadCategory.NextCategory;
+            } while (cloneOfHeadCategory.NextCategory != headOfCategory);
+
             return returnProductList;
         }
 

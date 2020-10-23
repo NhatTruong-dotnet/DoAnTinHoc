@@ -13,6 +13,7 @@ namespace DoAnTinHoc
         ProductService ProductService = new ProductService();
 
         const string filePath = @"C:\NhatTruong\Project\DoAnTinHoc\Data\CategoryData.txt";
+
         #region Function
         // Thêm một mặt hàng mới vào danh sách
 
@@ -289,7 +290,7 @@ namespace DoAnTinHoc
                 foreach (var item in categoryList)
                 {
                     string[] itemContent = item.Split(',');
-                    if (itemContent[0].Equals(categoryID))
+                    if (itemContent[0].Equals(categoryID.ToString()))
                     {
                         returnCategory = new Category
                         {

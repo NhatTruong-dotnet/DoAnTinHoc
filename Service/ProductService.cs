@@ -9,26 +9,31 @@ namespace DoAnTinHoc
 {
     public class ProductService
     {
+        private ProductRepo _productRepo;
+
+        public ProductService()
+        {
+            _productRepo = new ProductRepo();
+        }
+
         public Product LoadProductList(string filepath)
         {
             //dự phòng biến trả về 
             //init Repo của Product
-            ProductRepo ProductRepo = new ProductRepo();
-            return ProductRepo.loadProductList(filepath);
+            return _productRepo.loadProductList(filepath);
         }
 
-        public void AddNewProduct(ref Product headOfProduct)
+        public void AddNewProduct(ref Product headOfProduct, string filePathProduct)
         {
-            ProductRepo ProductRepo = new ProductRepo();
-            Product newProduct = ProductRepo.getNewProduct();
-            if (ProductRepo.validateProductName(newProduct.Name))
+            Product newProduct = _productRepo.getNewProduct(filePathProduct);
+            if (_productRepo.validateProductName(newProduct.Name,filePathProduct ))
             {
                 Console.WriteLine("Item already inserted");
             }
-            else if (ProductRepo.validateProduct(newProduct.Amount, newProduct.Price))
+            else if (_productRepo.validateProduct(newProduct.Amount, newProduct.Price))
             {
-                ProductRepo.insertProduct(ref headOfProduct, newProduct);
-                ProductRepo.updateFile(ref headOfProduct);
+                _productRepo.insertProduct(ref headOfProduct, newProduct);
+                _productRepo.updateFile(ref headOfProduct, filePathProduct);
                 Console.WriteLine("Insert success");
             }
             else
@@ -37,10 +42,9 @@ namespace DoAnTinHoc
             }
         }
 
-        public void DeleteProduct(ref Product headOfProduct)
+        public void DeleteProduct(ref Category headOfCategory)
         {
-            ProductRepo ProductRepo = new ProductRepo();
-            if (headOfProduct == null)
+            if (headOfCategory == null)
             {
                 Console.WriteLine("This list is empty now");
             }
@@ -48,56 +52,78 @@ namespace DoAnTinHoc
             {
                 Console.Write("Enter name of Product: ");
                 string deleteProductName = Console.ReadLine().Trim();
-                if (ProductRepo.validateProductName(deleteProductName))
+                Category cloneHeadOfCategory = headOfCategory;
+                bool isNotFind = true;
+                do
                 {
-                    ProductRepo.deleteProduct(ref headOfProduct, deleteProductName);
-                    ProductRepo.updateFile(ref headOfProduct);
+
+                    if (_productRepo.validateProductName(deleteProductName, cloneHeadOfCategory.filePathProduct))
+                    {
+                        Product headOfProduct = LoadProductList(cloneHeadOfCategory.filePathProduct);
+                        _productRepo.deleteProduct(ref headOfProduct, deleteProductName);
+                        _productRepo.updateFile(ref headOfProduct, cloneHeadOfCategory.filePathProduct);
+                        isNotFind = false;
+                    }
+                    cloneHeadOfCategory = cloneHeadOfCategory.NextCategory;
+                } while (cloneHeadOfCategory.NextCategory != headOfCategory);
+                if (isNotFind)
+                {
+                    Console.WriteLine("Product not in the list");
                 }
                 else
                 {
-                    Console.WriteLine("This Product not in list");
+                    Console.WriteLine("Deleted successful");
                 }
             }
         }
 
-        public void UpdateProduct(ref Product headOfProduct)
+        public void UpdateProduct(ref Category headOfCategory)
         {
-            if (headOfProduct == null)
+            if (headOfCategory == null)
             {
                 Console.WriteLine("This list is empty now");
             }
             else
             {
-                ProductRepo productRepo = new ProductRepo();
                 Console.Write("The Product want to update: ");
                 string needUpdateProduct = Console.ReadLine().Trim().ToLower();
-                Console.WriteLine("Update Product content: ");
-                Product updatedProduct = productRepo.getNewProduct();
-                if (productRepo.validateProductName(needUpdateProduct))
+                Category cloneHeadOfCategory = headOfCategory;
+                bool isNotFind = true;
+                do
                 {
-                    productRepo.updateProduct(ref headOfProduct, updatedProduct, needUpdateProduct);
-                    productRepo.updateFile(ref headOfProduct);
+                    if (_productRepo.validateProductName(needUpdateProduct, cloneHeadOfCategory.filePathProduct))
+                    {
+                         Product headOfProduct = LoadProductList(cloneHeadOfCategory.filePathProduct);
+                         Product updateProduct = _productRepo.getNewProduct(cloneHeadOfCategory.filePathProduct);
+                        _productRepo.updateProduct(ref headOfProduct, updateProduct, needUpdateProduct);
+                        _productRepo.updateFile(ref headOfProduct, cloneHeadOfCategory.filePathProduct);
+                        isNotFind = false;
+                    }
+                    cloneHeadOfCategory = cloneHeadOfCategory.NextCategory;
+                } while (cloneHeadOfCategory.NextCategory != headOfCategory);
+                if (isNotFind)
+                {
+                    Console.WriteLine("Product not in the list");
                 }
                 else
                 {
-                    Console.WriteLine("This Product not in list");
+                    Console.WriteLine("Updated successful");
                 }
             }
         }
 
-        public void GetProduct(ref Category headOfCategory,string inputFromUser)
+        public void GetProduct(ref Category headOfCategory, string inputFromUser)
         {
             if (headOfCategory != null)
             {
-                ProductRepo productRepo = new ProductRepo();
                 int productID = 0;
                 if (Int32.TryParse(inputFromUser, out productID))
                 {
-                     productRepo.GetProductByID(productID);
+                    _productRepo.GetProductByID(productID);
                 }
                 else
                 {
-                    LinkedList<Product> productList = productRepo.GetProductByName(ref headOfCategory, inputFromUser);
+                    LinkedList<Product> productList = _productRepo.GetProductByName(ref headOfCategory, inputFromUser);
                     if (productList.Count == 0)
                     {
                         Console.WriteLine("This Product not in the list");
@@ -106,7 +132,7 @@ namespace DoAnTinHoc
                     {
                         foreach (var item in productList)
                         {
-                            productRepo.ShowProduct(item);
+                            _productRepo.ShowProduct(item);
                         }
                     }
                 }
@@ -117,5 +143,10 @@ namespace DoAnTinHoc
             }
         }
 
-    }
+        public void ShowProduct(Product product)
+        {
+            _productRepo.ShowProduct(product);
+        }
+     }
 }
+

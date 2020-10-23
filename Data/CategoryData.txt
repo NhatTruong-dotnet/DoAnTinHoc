@@ -1,1 +1,2 @@
-1,phone,2,C:\Users\Dell\Desktop\ConsoleApp1\ConsoleApp3\Data\CategoryData.txt
+1,phone,2,C:\NhatTruong\Project\DoAnTinHoc\Data\phone.txt
+2,dao,1,C:\NhatTruong\Project\DoAnTinHoc\Data\dao.txt
