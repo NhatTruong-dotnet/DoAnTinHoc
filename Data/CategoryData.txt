@@ -1,1 +1,1 @@
-1,phone,2,C:\NhatTruong\Project\DoAnTinHoc\Data\phone.txt
+1,phone,2,C:\Users\Dell\Desktop\ConsoleApp1\ConsoleApp3\Data\CategoryData.txt
