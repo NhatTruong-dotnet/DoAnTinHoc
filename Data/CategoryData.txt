@@ -1,2 +1,2 @@
 1,phone,2,C:\NhatTruong\Project\DoAnTinHoc\Data\phone.txt
-2,dao,1,C:\NhatTruong\Project\DoAnTinHoc\Data\dao.txt
+2,test1,1,C:\NhatTruong\Project\DoAnTinHoc\Data\test1.txt

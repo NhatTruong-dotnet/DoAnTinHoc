@@ -68,7 +68,8 @@ namespace DoAnTinHoc
                         Category temp = new Category
                         {
                             IdCategory = Int32.Parse(tempCategoryContent[0]),
-                            Name = tempCategoryContent[1].ToString().Trim()
+                            Name = tempCategoryContent[1].ToString().Trim(),
+                            filePathProduct = tempCategoryContent[3].ToString().Trim()
                         };
                         // thêm nó vào danh sách đã có
                         insertCategory(ref headOfCategory, temp);

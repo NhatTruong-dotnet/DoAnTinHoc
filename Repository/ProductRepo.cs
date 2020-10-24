@@ -257,12 +257,6 @@ namespace DoAnTinHoc
             }
         }
 
-        public Product GetProductByID(int productId)
-        {
-            Product returnedProduct = new Product();
-            return returnedProduct;
-        }
-
         public LinkedList<Product> GetProductByName(ref Category headOfCategory, string productName)
         {
             LinkedList<Product> returnProductList = new LinkedList<Product>();
@@ -290,7 +284,7 @@ namespace DoAnTinHoc
             return returnProductList;
         }
 
-        public LinkedList<Product> GetProductID(ref Category headOfCategory, int IDProduct)
+        public LinkedList<Product> GetProductByID(ref Category headOfCategory, int IDProduct)
         {
             LinkedList<Product> returnProductList = new LinkedList<Product>();
 

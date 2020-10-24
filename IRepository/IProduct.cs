@@ -27,7 +27,7 @@ namespace DoAnTinHoc
         #endregion
 
         #region Search
-        Product GetProductByID(int productId);
+        LinkedList<Product> GetProductByID(ref Category headOfCategory, int IDProduct);
         LinkedList<Product> GetProductByName(ref Category headOfCategory, string productName);
 
         #endregion

@@ -51,8 +51,9 @@ namespace DoAnTinHoc
             else
             {
                 Console.Write("Enter name of Product: ");
-                string deleteProductName = Console.ReadLine().Trim();
+                string deleteProductName = Console.ReadLine().Trim().ToLower(); ;
                 Category cloneHeadOfCategory = headOfCategory;
+                int theFirstID = headOfCategory.IdCategory;
                 bool isNotFind = true;
                 do
                 {
@@ -65,7 +66,7 @@ namespace DoAnTinHoc
                         isNotFind = false;
                     }
                     cloneHeadOfCategory = cloneHeadOfCategory.NextCategory;
-                } while (cloneHeadOfCategory.NextCategory != headOfCategory);
+                } while (cloneHeadOfCategory.IdCategory != theFirstID);
                 if (isNotFind)
                 {
                     Console.WriteLine("Product not in the list");
@@ -88,6 +89,7 @@ namespace DoAnTinHoc
                 Console.Write("The Product want to update: ");
                 string needUpdateProduct = Console.ReadLine().Trim().ToLower();
                 Category cloneHeadOfCategory = headOfCategory;
+                int theFirstId = headOfCategory.IdCategory;
                 bool isNotFind = true;
                 do
                 {
@@ -100,7 +102,7 @@ namespace DoAnTinHoc
                         isNotFind = false;
                     }
                     cloneHeadOfCategory = cloneHeadOfCategory.NextCategory;
-                } while (cloneHeadOfCategory.NextCategory != headOfCategory);
+                } while (cloneHeadOfCategory.IdCategory != theFirstId);
                 if (isNotFind)
                 {
                     Console.WriteLine("Product not in the list");
@@ -119,7 +121,7 @@ namespace DoAnTinHoc
                 int productID = 0;
                 if (Int32.TryParse(inputFromUser, out productID))
                 {
-                    _productRepo.GetProductByID(productID);
+                    _productRepo.GetProductByID(ref headOfCategory, productID);
                 }
                 else
                 {
