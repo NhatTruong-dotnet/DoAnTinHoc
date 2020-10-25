@@ -33,7 +33,7 @@ namespace DoAnTinHoc
             Category newCategory = _categoryRepo.getNewCategory();
             if (_categoryRepo.validateCategory(newCategory.Name))
             {
-                Console.WriteLine("Item already inserted");
+                Console.WriteLine("-->Item already inserted");
             }
             else
             {
@@ -41,7 +41,7 @@ namespace DoAnTinHoc
                 _categoryRepo.insertCategory(ref headOfCategory, newCategory);
                 File.Create(newCategory.filePathProduct);
                 _categoryRepo.updateFile(ref headOfCategory);
-                Console.WriteLine("Insert success");
+                Console.WriteLine("-->Insert success");
             }
         }
 
@@ -50,11 +50,11 @@ namespace DoAnTinHoc
 
             if (headOfCategory == null)
             {
-                Console.WriteLine("This list is empty now");
+                Console.WriteLine("-->This list is empty now");
             }
             else
             {
-                Console.Write("Enter category name: ");
+                Console.Write("-->Enter category name: ");
                 string deleteCategoryName = Console.ReadLine().Trim();
 
                 if (_categoryRepo.validateCategory(deleteCategoryName))
@@ -62,10 +62,11 @@ namespace DoAnTinHoc
                     _categoryRepo.deleteCategory(ref headOfCategory, deleteCategoryName);
                     File.Delete(GetCategory(deleteCategoryName).filePathProduct);
                     _categoryRepo.updateFile(ref headOfCategory);
+                    Console.WriteLine("Delete success");
                 }
                 else
                 {
-                    Console.WriteLine("This category not in list");
+                    Console.WriteLine("-->This category not in list");
                 }
             }
         }
@@ -74,14 +75,14 @@ namespace DoAnTinHoc
         {
             if (headOfCategory == null)
             {
-                Console.WriteLine("This list is empty now");
+                Console.WriteLine("-->This list is empty now");
             }
             else
             {
 
-                Console.Write("The category want to update: ");
+                Console.Write("-->The category want to update: ");
                 string needUpdateCategory = Console.ReadLine().Trim();
-                Console.WriteLine("Update content");
+                Console.WriteLine("-->Update content");
                 Category updatedCategory = _categoryRepo.getNewCategory();
                 if (_categoryRepo.validateCategory(needUpdateCategory))
                 {
@@ -90,10 +91,11 @@ namespace DoAnTinHoc
                     _categoryRepo.updateCategory(ref headOfCategory, updatedCategory, needUpdateCategory);
                     File.Move(fileNeedToRename, updatedCategory.filePathProduct);
                     _categoryRepo.updateFile(ref headOfCategory);
+                    Console.WriteLine("Update success");
                 }
                 else
                 {
-                    Console.WriteLine("This category not in list");
+                    Console.WriteLine("-->This category not in list");
                 }
             }
         }
@@ -102,12 +104,12 @@ namespace DoAnTinHoc
         {
             if (headOfCategory == null)
             {
-                Console.WriteLine("This list is empty now");
+                Console.WriteLine("-->This list is empty now");
             }
             else
             {
                 int theFirstID = headOfCategory.IdCategory;
-                Console.Write("The List of Category: ");
+                Console.Write("-->The List of Category: ");
                 Console.Write(headOfCategory.Name);
                 headOfCategory = headOfCategory.NextCategory;
                 while (headOfCategory.IdCategory != theFirstID)
@@ -119,7 +121,7 @@ namespace DoAnTinHoc
 
         }
 
-        public void MenuList(Category headOfCategory)
+        public void MenuList(ref Category headOfCategory)
         {
             string[] space = new string[30];
             string[] spaceFunction = new string[10];
@@ -150,7 +152,7 @@ namespace DoAnTinHoc
             Console.WriteLine(String.Join(" ", spaceFunction));
             Console.WriteLine("***********************************************************************************");
 
-            Console.Write("*Your Choose: ");
+            Console.Write("-->*Your Choose: ");
             #endregion
 
             if (Int32.TryParse(Console.ReadLine(), out inputFromUser))
@@ -178,12 +180,13 @@ namespace DoAnTinHoc
                     #region case 4
                     case 4:
                         DeleteCategory(ref headOfCategory);
+                        //LoadCategoryList(ref headOfCategory);
                         break;
                     #endregion
 
                     #region case 5
                     case 5:
-                        Console.Write("Enter Name or ID of category: ");
+                        Console.Write("-->Enter Name or ID of category: ");
                         string input = Console.ReadLine();
                         Category temp = GetCategory(input.Trim().ToLower());
                         break;
@@ -191,26 +194,43 @@ namespace DoAnTinHoc
 
                     #region case 6
                     case 6:
-                        Console.Write("Enter your category u want to show product list: ");
+                        Console.Write("-->Enter your category u want to show product list: ");
                         string categoryName = Console.ReadLine();
-                        Category categoryToShow = GetCategory(categoryName);
-                        Product productList = _productService.LoadProductList(categoryToShow.filePathProduct);
-                        int theFirstID = productList.IdProduct;
-                        do
+                        if (_categoryRepo.validateCategory(categoryName))
                         {
-                            _productService.ShowProduct(productList);
-                            productList = productList.NextProduct;
-                        } while (productList.IdProduct != theFirstID);
+                            Category categoryToShow = GetCategory(categoryName);
+                            Product headOfProduct = _productService.LoadProductList(categoryToShow.filePathProduct);
+                            int theFirstID = headOfProduct.IdProduct;
+                            if (theFirstID == 0)
+                            {
+                                do
+                                {
+                                    _productService.ShowProduct(headOfProduct.NextProduct);
+                                    headOfProduct.NextProduct = headOfProduct.NextProduct.NextProduct;
+                                } while (headOfProduct.NextProduct.IdProduct != theFirstID);
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("-->Category not in the list");
+                        }
                         break;
                     #endregion
 
                     #region case 7
                     case 7:
-                        Console.Write("Enter your category u want to add product list: ");
+                        Console.Write("-->Enter your Category u want to add product list: ");
                         categoryName = Console.ReadLine().Trim();
-                        Category tempCategory = GetCategory(categoryName);
-                        Product headOfProduct = _productService.LoadProductList(tempCategory.filePathProduct);
-                        _productService.AddNewProduct(ref headOfProduct, tempCategory.filePathProduct);
+                        if (_categoryRepo.validateCategory(categoryName))
+                        {
+                            Category tempCategory = GetCategory(categoryName);
+                            Product headOfProduct = _productService.LoadProductList(tempCategory.filePathProduct);
+                            _productService.AddNewProduct(ref headOfProduct, tempCategory.filePathProduct);
+                        }
+                        else
+                        {
+                            Console.WriteLine("-->The Category not in the list");
+                        }
                         break;
                     #endregion
 
@@ -228,7 +248,7 @@ namespace DoAnTinHoc
 
                     #region case 10
                     case 10:
-                        Console.Write("Enter Name or ID of Product: ");
+                        Console.Write("-->Enter Name or ID of Product: ");
                         input = Console.ReadLine().Trim().ToLower();
                         _productService.GetProduct(ref headOfCategory, input);
                         break;
@@ -237,7 +257,7 @@ namespace DoAnTinHoc
             }
             else
             {
-                Console.WriteLine("Failed");
+                Console.WriteLine("-->Failed");
                 Console.WriteLine(inputFromUser);
             }
         }
@@ -247,13 +267,21 @@ namespace DoAnTinHoc
             CategoryRepo categoryRepo = new CategoryRepo();
             Category returned = new Category();
             int categoryID = 0;
+            
             if (Int32.TryParse(inputFromUser, out categoryID))
             {
                 returned = categoryRepo.GetCategoryByID(categoryID);
             }
             else
             {
-                returned = categoryRepo.GetCategoryByName(inputFromUser);
+                if (_categoryRepo.validateCategory(inputFromUser))
+                {
+                    returned = categoryRepo.GetCategoryByName(inputFromUser);
+                }
+                else
+                {
+                    Console.WriteLine("-->Category not in the List");
+                }
             }
             return returned;
         }

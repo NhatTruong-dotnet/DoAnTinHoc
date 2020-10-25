@@ -37,7 +37,7 @@ namespace DoAnTinHoc
             string[] categoryList = File.ReadAllLines(filePath);
             if (categoryList.Length == 0)
             {
-                Console.WriteLine("File empty");
+                Console.WriteLine("-->File empty");
             }
             else
             {
@@ -81,7 +81,7 @@ namespace DoAnTinHoc
         public void deleteCategory(ref Category headOfCategory, string deleteCategoryName)
         {
             if (headOfCategory == null)
-                Console.WriteLine("This List is Empty");
+                Console.WriteLine("-->This List is Empty");
             else
             {
                 // sure là thằng đầu tiên sẽ là con trỏ rồi nên lấy nó ra khỏi cái list mặt hàng
@@ -112,7 +112,7 @@ namespace DoAnTinHoc
                             if (cloneOfProduct.Name == deleteCategoryName)
                             {
                                 pointerInLoop.NextCategory = cloneOfProduct.NextCategory;
-                                Console.WriteLine("Deleted");
+                                Console.WriteLine("-->Deleted");
                                 break;
                             }
                             cloneOfProduct = cloneOfProduct.NextCategory;
@@ -178,7 +178,7 @@ namespace DoAnTinHoc
             }
             catch (Exception)
             {
-                Console.WriteLine("This category list is empty now");
+                Console.WriteLine("-->This category list is empty now");
                 return result;
             }
                 
@@ -206,7 +206,7 @@ namespace DoAnTinHoc
             }
             catch (Exception)
             {
-                Console.Write("Enter your category: ");
+                Console.Write("-->Enter your category: ");
                 nameCategory = Console.ReadLine().ToLower().Trim();
                 return returnCategory = new Category { IdCategory = idCategory, Name = nameCategory };
             }
@@ -259,13 +259,11 @@ namespace DoAnTinHoc
         public Category GetCategoryByName(string categoryName)
         {
             Category returnCategory = new Category();
-            if (validateCategory(categoryName))
-            {
                 string[] categoryList = File.ReadAllLines(filePath);
                 foreach (var item in categoryList)
                 {
                     string[] itemContent = item.Split(',');
-                    if (itemContent[1].Equals(categoryName.ToString()))
+                    if (itemContent[1].Contains(categoryName))
                     {
                         returnCategory = new Category
                         {
@@ -273,11 +271,12 @@ namespace DoAnTinHoc
                             Name = itemContent[1],
                             filePathProduct = itemContent[3]
                         };
-                        Console.WriteLine("ID: "+ itemContent[0]);
-                        Console.WriteLine("Name: " + itemContent[1]);
+                    Console.WriteLine("-----------------------------------------------");
+                    Console.WriteLine("ID CateGory: "+ itemContent[0]);
+                    Console.WriteLine("Name CateGory: " + itemContent[1]);
+                    Console.WriteLine("-----------------------------------------------");
                     }
                 }
-            }
             return returnCategory;
         }
 
@@ -299,10 +298,16 @@ namespace DoAnTinHoc
                             Name = itemContent[1],
                             filePathProduct = itemContent[3]
                         };
+                        Console.WriteLine("-----------------------------------------------");
                         Console.WriteLine("ID: " + itemContent[0]);
                         Console.WriteLine("Name: " + itemContent[1]);
+                        Console.WriteLine("-----------------------------------------------");
                     }
                 }
+            }
+            else
+            {
+                Console.WriteLine("-->Category not in the List");
             }
             return returnCategory;
         }

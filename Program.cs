@@ -18,8 +18,12 @@ namespace DoAnTinHoc
             CategoryService categoryService = new CategoryService();
             categoryService.LoadCategoryList(ref headOfCategory);
             ProductService productService = new ProductService();
-            categoryService.MenuList(headOfCategory);
-            Console.Read();
+            while (true)
+            {
+                categoryService.MenuList(ref headOfCategory);
+                Console.WriteLine();
+                
+            }
         }
     }
 }

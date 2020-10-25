@@ -36,7 +36,7 @@ namespace DoAnTinHoc
             string[] ProductList = File.ReadAllLines(filepathFromHead);
             if (ProductList.Length == 0)
             {
-                Console.WriteLine("File Product empty");
+                Console.WriteLine("-->File Product empty");
             }
             else
             {
@@ -82,7 +82,7 @@ namespace DoAnTinHoc
         public void deleteProduct(ref Product headOfProduct, string deleteProductName)
         {
             if (headOfProduct == null)
-                Console.WriteLine("This List is Empty");
+                Console.WriteLine("-->This List is Empty");
             else
             {
                 // sure là thằng đầu tiên sẽ là con trỏ rồi nên lấy nó ra khỏi cái list mặt hàng
@@ -120,7 +120,7 @@ namespace DoAnTinHoc
                         }
                     }
                 }
-                
+
             }
         }
         #endregion
@@ -143,10 +143,10 @@ namespace DoAnTinHoc
         public bool validateProduct(int Amount, double Price)
         {
             bool result = false;
-                if (Amount > 0 && Price > 0)
-                {
-                    return result = true;
-                }
+            if (Amount > 0 && Price > 0)
+            {
+                return result = true;
+            }
             return result;
         }
 
@@ -164,11 +164,11 @@ namespace DoAnTinHoc
             }
             catch (Exception)
             {
-                Console.Write("Enter your category: ");
+                Console.Write("-->Enter your Product: ");
                 nameProduct = Console.ReadLine().ToLower().Trim();
-                Console.Write("Enter your amount: ");
+                Console.Write("-->Enter your amount: ");
                 amount = Int32.Parse(Console.ReadLine());
-                Console.Write("Enter your price: ");
+                Console.Write("-->Enter your price: ");
                 price = Convert.ToDouble(Console.ReadLine());
                 return returnProduct = new Product
                 {
@@ -178,11 +178,11 @@ namespace DoAnTinHoc
                     Price = price
                 };
             }
-            Console.Write("Enter your Product: ");
+            Console.Write("-->Enter your Product: ");
             nameProduct = Console.ReadLine().ToLower().Trim();
-            Console.Write("Enter your amount: ");
+            Console.Write("-->Enter your amount: ");
             amount = Int32.Parse(Console.ReadLine());
-            Console.Write("Enter your price: ");
+            Console.Write("-->Enter your price: ");
             price = Convert.ToDouble(Console.ReadLine());
 
             string[] lastProduct = File.ReadAllLines(filePathProduct).Last().Split(',');
@@ -264,23 +264,26 @@ namespace DoAnTinHoc
             Category cloneOfHeadCategory = headOfCategory;
 
             Product productList = new Product();
-            productList = loadProductList(cloneOfHeadCategory.filePathProduct);
             int theFlatOfProduct = productList.IdProduct;
             do
             {
                 productList = loadProductList(cloneOfHeadCategory.filePathProduct);
-                    do
+                do
+                {
+                    if (productList.NextProduct != productList)
                     {
                         if (productList.Name.Contains(productName))
                         {
                             returnProductList.AddLast(productList);
                         }
                         productList = productList.NextProduct;
-                    } while (productList.IdProduct != theFlatOfProduct);
+                    }
+
+                } while (productList.IdProduct != theFlatOfProduct);
 
                 cloneOfHeadCategory = cloneOfHeadCategory.NextCategory;
             } while (cloneOfHeadCategory.NextCategory != headOfCategory);
-           
+
             return returnProductList;
         }
 
@@ -291,7 +294,6 @@ namespace DoAnTinHoc
             Category cloneOfHeadCategory = headOfCategory;
 
             Product productList = new Product();
-            productList = loadProductList(cloneOfHeadCategory.filePathProduct);
             int theFlatOfProduct = productList.IdProduct;
             do
             {
@@ -313,11 +315,12 @@ namespace DoAnTinHoc
 
         public void ShowProduct(Product product)
         {
-            Console.WriteLine("ID: {0}", product.IdProduct);
-            Console.WriteLine("Name: {0}", product.Name);
-            Console.WriteLine("Amout: {0}", product.Amount);
-            Console.WriteLine("Price: {0}", product.Price);
-            Console.WriteLine();
+                Console.WriteLine("-----------------------------------------------");
+                Console.WriteLine("ID: {0}", product.IdProduct);
+                Console.WriteLine("Name: {0}", product.Name);
+                Console.WriteLine("Amout: {0}", product.Amount);
+                Console.WriteLine("Price: {0}", product.Price);
+                Console.WriteLine("-----------------------------------------------");
         }
     }
     #endregion

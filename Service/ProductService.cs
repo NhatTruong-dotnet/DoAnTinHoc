@@ -28,17 +28,17 @@ namespace DoAnTinHoc
             Product newProduct = _productRepo.getNewProduct(filePathProduct);
             if (_productRepo.validateProductName(newProduct.Name,filePathProduct ))
             {
-                Console.WriteLine("Item already inserted");
+                Console.WriteLine("-->Item already inserted");
             }
             else if (_productRepo.validateProduct(newProduct.Amount, newProduct.Price))
             {
                 _productRepo.insertProduct(ref headOfProduct, newProduct);
                 _productRepo.updateFile(ref headOfProduct, filePathProduct);
-                Console.WriteLine("Insert success");
+                Console.WriteLine("-->Insert success");
             }
             else
             {
-                Console.WriteLine("Vui long nhap so duong");
+                Console.WriteLine("--> Vui long nhap so duong");
             }
         }
 
@@ -46,11 +46,11 @@ namespace DoAnTinHoc
         {
             if (headOfCategory == null)
             {
-                Console.WriteLine("This list is empty now");
+                Console.WriteLine("-->This list is empty now");
             }
             else
             {
-                Console.Write("Enter name of Product: ");
+                Console.Write("-->Enter name of Product: ");
                 string deleteProductName = Console.ReadLine().Trim().ToLower(); ;
                 Category cloneHeadOfCategory = headOfCategory;
                 int theFirstID = headOfCategory.IdCategory;
@@ -69,11 +69,11 @@ namespace DoAnTinHoc
                 } while (cloneHeadOfCategory.IdCategory != theFirstID);
                 if (isNotFind)
                 {
-                    Console.WriteLine("Product not in the list");
+                    Console.WriteLine("-->Product not in the list");
                 }
                 else
                 {
-                    Console.WriteLine("Deleted successful");
+                    Console.WriteLine("-->Deleted successful");
                 }
             }
         }
@@ -82,11 +82,11 @@ namespace DoAnTinHoc
         {
             if (headOfCategory == null)
             {
-                Console.WriteLine("This list is empty now");
+                Console.WriteLine("-->This list is empty now");
             }
             else
             {
-                Console.Write("The Product want to update: ");
+                Console.Write("-->The Product want to update: ");
                 string needUpdateProduct = Console.ReadLine().Trim().ToLower();
                 Category cloneHeadOfCategory = headOfCategory;
                 int theFirstId = headOfCategory.IdCategory;
@@ -105,11 +105,11 @@ namespace DoAnTinHoc
                 } while (cloneHeadOfCategory.IdCategory != theFirstId);
                 if (isNotFind)
                 {
-                    Console.WriteLine("Product not in the list");
+                    Console.WriteLine("-->Product not in the list");
                 }
                 else
                 {
-                    Console.WriteLine("Updated successful");
+                    Console.WriteLine("-->Updated successful");
                 }
             }
         }
@@ -121,14 +121,25 @@ namespace DoAnTinHoc
                 int productID = 0;
                 if (Int32.TryParse(inputFromUser, out productID))
                 {
-                    _productRepo.GetProductByID(ref headOfCategory, productID);
+                    LinkedList<Product> productListId =_productRepo.GetProductByID(ref headOfCategory, productID);
+                    if (productListId.Count == 0)
+                    {
+                        Console.WriteLine("-->This Product not in the list");
+                    }
+                    else
+                    {
+                        foreach (var item in productListId)
+                        {
+                            _productRepo.ShowProduct(item);
+                        }
+                    }
                 }
                 else
                 {
                     LinkedList<Product> productList = _productRepo.GetProductByName(ref headOfCategory, inputFromUser);
                     if (productList.Count == 0)
                     {
-                        Console.WriteLine("This Product not in the list");
+                        Console.WriteLine("-->This Product not in the list");
                     }
                     else
                     {
@@ -141,7 +152,7 @@ namespace DoAnTinHoc
             }
             else
             {
-                Console.WriteLine("The List is empty");
+                Console.WriteLine("-->The List is empty");
             }
         }
 
